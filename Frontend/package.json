@@ -1,0 +1,75 @@
+{
+  "name": "webui",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.28",
+    "@fortawesome/free-solid-svg-icons": "^5.13.0",
+    "@fortawesome/react-fontawesome": "^0.1.9",
+    "@microsoft/signalr": "^3.1.4",
+    "ace-builds": "^1.4.11",
+    "axios": "^0.19.2",
+    "immer": "^7.0.5",
+    "merge": "^1.2.1",
+    "oidc-client": "^1.9.0",
+    "react": "^16.0.0",
+    "react-ace": "^9.0.0",
+    "react-dom": "^16.0.0",
+    "react-draggable": "^4.4.3",
+    "react-redux": "^7.2.0",
+    "react-resize-detector": "^5.0.6",
+    "react-router-bootstrap": "^0.25.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^3.4.0",
+    "react-split-pane": "^0.1.91",
+    "react-toastify": "^6.0.8",
+    "reactstrap": "^8.4.1",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "rimraf": "^2.6.2",
+    "simple-peer": "^9.7.2"
+  },
+  "devDependencies": {
+    "@types/react-dom": "^16.9.8",
+    "@types/react-redux": "^7.1.9",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/simple-peer": "^9.6.0",
+    "ajv": "^6.9.1",
+    "autoprefixer": "^9.8.0",
+    "cross-env": "^5.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-react-app": "^5.2.0",
+    "eslint-plugin-flowtype": "^4.6.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.18.3",
+    "postcss-cli": "^7.1.1",
+    "postcss-import": "^12.0.1",
+    "tailwindcss": "^1.4.6",
+    "typescript": "^3.9.3"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "scripts": {
+    "start": "npm run watch:css & rimraf ./build && react-scripts start",
+    "build": "npm run build:css & react-scripts build",
+    "test": "cross-env CI=true react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "build:css": "postcss src/styles/tailwind.css -o src/styles/app.css",
+    "watch:css": "postcss src/styles/tailwind.css -o src/styles/app.css -w",
+    "lint": "eslint ./src/"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

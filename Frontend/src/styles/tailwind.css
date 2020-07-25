@@ -1,0 +1,62 @@
+@tailwind base;
+
+@tailwind components;
+
+.level-01dp {
+    @apply bg-overlay bg-opacity-5;
+}
+
+.level-02dp {
+    @apply bg-overlay bg-opacity-7 ;
+}
+
+.level-03dp {
+    @apply bg-overlay bg-opacity-8;
+}
+
+.level-04dp {
+    @apply bg-overlay bg-opacity-9 ;
+}
+
+.level-06dp {
+    @apply bg-overlay bg-opacity-11;
+}
+
+.level-08dp {
+    @apply bg-overlay bg-opacity-12;
+}
+
+.level-12dp {
+    @apply bg-overlay bg-opacity-14;
+}
+
+.level-16dp {
+    @apply bg-overlay bg-opacity-15;
+}
+
+.level-24dp {
+    @apply  bg-overlay bg-opacity-16;
+}
+
+@tailwind utilities;
+
+.ace_gutter {
+    @apply level-01dp !important;
+}
+
+.ace_editor {
+    @apply bg-background !important;
+}
+
+.Resizer {
+    @apply level-06dp;
+    z-index: 1;
+}
+
+.Resizer.vertical {
+    width: 4px;
+    cursor: col-resize;
+}
+.Resizer.disabled {
+    cursor: not-allowed;
+}

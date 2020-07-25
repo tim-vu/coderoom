@@ -1,0 +1,28 @@
+
+### Jetbrains IDE files
+
+**/.idea/*
+
+### ASP.NET core
+
+**/obj/*
+**/bin/*
+**/*.DotSettings.user
+
+
+### Node.js
+
+**/node_modules/*
+**/.vscode/*
+**/package-lock.json
+
+### Python
+
+**/__pycache__/*
+
+
+### Sandbox worker
+
+SandboxWorker/sandbox/code/*
+
+

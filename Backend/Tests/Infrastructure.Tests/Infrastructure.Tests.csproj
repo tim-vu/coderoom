@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FluentAssertions" Version="5.10.3" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
+      <PackageReference Include="Moq" Version="4.14.1" />
+      <PackageReference Include="xunit" Version="2.4.1" />
+      <PackageReference Include="xunit.runner.visualstudio" Version="2.4.2" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <Content Include="SourceFiles\**\*.*">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\..\Src\Infrastructure\Infrastructure.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <Compile Remove="SourceFiles\CSharp\**\*.cs" />
+        <None Include="SourceFiles\CSharp\SyntaxError\Solution.cs" />
+        <None Include="SourceFiles\CSharp\**\*.cs" />
+    </ItemGroup>
+
+</Project>
