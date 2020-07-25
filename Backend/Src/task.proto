@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package task;
+
+message ExecutionTask {
+    string task_id = 1;
+    string room_id = 2;
+    string language_key = 3;
+
+    message File {
+        string filename = 1;
+        bytes content = 2;
+    }
+
+    repeated File files = 4;
+}
+
+message ExecutionTaskResult {
+    string task_id = 1;
+    string room_id = 2;
+
+    bool error = 3;
+    string error_message = 4;
+    string output = 5;
+    float execution_time = 6;
+}
