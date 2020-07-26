@@ -1,21 +1,21 @@
-version: '3.8'
+version: "3.8"
 
 services:
   redis:
-    image: 'redis:alpine3.12'
+    image: "redis:alpine3.12"
     container_name: redis
     command: redis-server
     volumes:
-      - './config/redis/:/usr/local/etc/redis/:rw'
+      - "./config/redis/:/usr/local/etc/redis/:rw"
     ports:
-      - '6379:6379'
+      - "6379:6379"
   rabbitmq:
     build: ./config/rabbitmq
     container_name: rabbitmq
     ports:
-      - '5672:5672'
-      - '15672:15672'
-    environment:            
+      - "5672:5672"
+      - "15672:15672"
+    environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
   sandbox-worker:
@@ -25,13 +25,27 @@ services:
     environment:
       RABBITMQ_USERNAME: ${RABBITMQ_USER}
       RABBITMQ_PASSWORD: ${RABBITMQ_PASS}
-      EXECUTABLES_VOLUME: 'coderoom_executables'
+      EXECUTABLES_VOLUME: "coderoom_executables"
     command: sh -c './wait-for rabbitmq:5672 -- python worker.py'
-    volumes:      
+    volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - executables:/app/sandbox/code/
+  backend:
+    build: ./Backend
+    depends_on:
+      - redis
+      - rabbitmq
+      - sandbox-worker
+    ports:
+      - "8000:80"
+    environment:
+      RedisConnection: "redis:6379"
+      EventBusConnection: "rabbitmq:5672"
+      EventBusUsername: ${RABBITMQ_USER}
+      EventBusPassword: ${RABBITMQ_PASS}
+    command: sh -c './wait-for rabbitmq:5672 -- ./wait-for redis:6379 -- ./WebUI'
 
 volumes:
   executables:
     external:
-      name: 'coderoom_executables'
+      name: "coderoom_executables"
