@@ -54,8 +54,10 @@ namespace WebUI
             
             eventBus.RegisterEventHandlers();
 
-            app.UseStaticFiles();
-            app.UseSpaStaticFiles();
+            if(env.IsDevelopment()){
+                app.UseStaticFiles();
+                app.UseSpaStaticFiles();
+            }
 
             app.UseRouting();
 
@@ -65,15 +67,17 @@ namespace WebUI
                 endpoints.MapControllers();
             });
 
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "../../../Frontend";
-
-                if (env.IsDevelopment())
+            if(env.IsDevelopment()){
+                app.UseSpa(spa =>
                 {
-                    spa.UseReactDevelopmentServer("start");
-                }
-            });
+                    spa.Options.SourcePath = "../../../Frontend";
+
+                    if (env.IsDevelopment())
+                    {
+                        spa.UseReactDevelopmentServer("start");
+                    }
+                });
+            }
         }
     }
 }
