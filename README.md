@@ -2,6 +2,8 @@
 
 CodeRoom is an online platform with the aim to provide a streamlined experience for upcoming students to practice one-on-one interviews.
 
+![](https://i.imgur.com/nU0brr2.png)
+
 ## Supported features
 
 - Create a room and invite your peer
