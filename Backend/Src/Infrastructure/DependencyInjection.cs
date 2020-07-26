@@ -45,7 +45,8 @@ namespace Infrastructure
                 var factory = new ConnectionFactory
                 {
                     DispatchConsumersAsync = true,
-                    Endpoint = new AmqpTcpEndpoint(new Uri(configuration["EventBusConnection"]))
+                    HostName = configuration["EventBusConnection"],
+                    Endpoint = new AmqpTcpEndpoint(new Uri("amqp://" + configuration["EventBusConnection"]))
                 };
 
                 if (!string.IsNullOrEmpty(configuration["EventBusUsername"]))
