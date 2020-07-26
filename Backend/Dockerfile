@@ -15,6 +15,10 @@ COPY . .
 RUN dotnet publish -c Release -o /app
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS runtime
+RUN apt-get -q update && apt-get -qy install netcat
 WORKDIR /app
 COPY --from=build /app .
-ENTRYPOINT ["./WebUI"]
+COPY wait-for .
+RUN chmod +x wait-for
+
+
