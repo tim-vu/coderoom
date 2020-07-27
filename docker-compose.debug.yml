@@ -1,0 +1,39 @@
+version: "2.4"
+
+services:
+  redis:
+    extends:
+      file: common-services.yml
+      service: redis
+    ports:
+      - "6379:6379"
+  rabbitmq:
+    extends:
+      file: common-services.yml
+      service: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  sandbox-worker:
+    extends:
+      file: common-services.yml
+      service: sandbox-worker
+  backend:
+    build: ./Backend
+    depends_on:
+      - redis
+      - rabbitmq
+      - sandbox-worker
+    ports:
+      - "8000:80"
+    environment:
+      RedisConnection: "redis:6379"
+      EventBusConnection: "rabbitmq:5672"
+      EventBusUsername: ${RABBITMQ_USER}
+      EventBusPassword: ${RABBITMQ_PASS}
+    command: sh -c './wait-for rabbitmq:5672 -- ./wait-for redis:6379 -- ./WebUI'
+
+volumes:
+executables:
+  external:
+    name: "coderoom_executables"
