@@ -1,0 +1,15 @@
+version: 2.1
+
+jobs:
+  test_backend:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Build test containers
+          command: docker-compose -f docker-compose.backend.test.yml -p ci up
+
+workflows:
+  test_backend:
+    jobs:
+      - test_backend
