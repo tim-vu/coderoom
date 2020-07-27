@@ -18,20 +18,6 @@ services:
     extends:
       file: common-services.yml
       service: sandbox-worker
-  backend:
-    build: ./Backend
-    depends_on:
-      - redis
-      - rabbitmq
-      - sandbox-worker
-    ports:
-      - "8000:80"
-    environment:
-      RedisConnection: "redis:6379"
-      EventBusConnection: "rabbitmq:5672"
-      EventBusUsername: ${RABBITMQ_USER}
-      EventBusPassword: ${RABBITMQ_PASS}
-    command: sh -c './wait-for rabbitmq:5672 -- ./wait-for redis:6379 -- ./WebUI'
 
 volumes:
 executables:
