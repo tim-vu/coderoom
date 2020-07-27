@@ -36,8 +36,6 @@ namespace Infrastructure.Compiler.Compilers.Java
 
             BufferedCommandResult output = null;
             
-            return null;
-            
             try
             {
                 await WriteFilesToTempDirectory(sourceFiles);
