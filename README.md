@@ -1,6 +1,6 @@
 # CodeRoom
 
-CodeRoom is an online platform with the aim to provide a streamlined experience for upcoming students to practice one-on-one interviews.
+CodeRoom is an online platform with the aim to provide a streamlined experience for upcoming software developers to practice one-on-one interviews.
 
 ![](https://i.imgur.com/nU0brr2.png)
 
@@ -28,17 +28,15 @@ The sandboxworker is responsible for executing payloads. This is done by creatin
 
 The backend is written in C# using ASP.NET core. The design of the system follows Clean architecture. Rooms and related data are stored in a redis server. Communication between the backend and the sandbox workers is done through a (simple) servicebus. The service bus is managed by RabbitMQ
 
-## Running (and debugging) CodeRoom
+## Debugging CodeRoom
 
-In order to run CodeRoom the following software must be installed on the host machine (only the first 4 are required to run (not debug) CodeRoom):
+In order to debug CodeRoom the following software must be installed on the host machine.
 
-- .NET Core Runtime 3.1
+- .NET Core 3.1 SDK
 - Node.js
+- OpenJDK 11
 - Docker
 - gVisor (application kernel for the sandbox)
-- Python 3.8
-
-At this time the backend is not yet containerized.
 
 ### Starting CodeRoom
 
@@ -50,15 +48,19 @@ The following commands starts CodeRoom, these commands are for linux based syste
 export RABBITMQ_PASS='pass123'
 export RABBITMQ_USER='user123'
 
-# Start the containers
-docker-compose up
+# Start the required services
+docker-compose -f docker-compose.debug.yml -p debug up
 
 # Navigate to the WebUI project
 cd Backend/Src/WebUI
 
 # Restore packages
 dotnet restore
+```
 
+You can now start the backend from your favorite IDE or from the commandline.
+
+```
 # Set environment variable
 export ASPNETCORE_ENVIRONMENT=Development
 
