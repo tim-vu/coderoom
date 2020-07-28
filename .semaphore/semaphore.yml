@@ -1,14 +1,16 @@
 version: v1.0
-name: Initial Pipeline
+name: CodeRoom
 agent:
   machine:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
   - name: Run backend tests
+    run:
+      when: "change_in('/Backend/')"
     task:
       jobs:
         - name: Build and run tests
           commands:
             - checkout
-            - docker-compose -f docker-compose.backend.test.yml -p ci up
+            - docker-compose -f docker-compose.backend.test.yml -p ci up --exit-code-from backend
