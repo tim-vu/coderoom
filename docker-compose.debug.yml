@@ -20,6 +20,6 @@ services:
       service: sandbox-worker
 
 volumes:
-executables:
-  external:
-    name: "coderoom_executables"
+  executables:
+    external:
+      name: "coderoom_executables"
