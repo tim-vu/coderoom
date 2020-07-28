@@ -1,0 +1,8 @@
+version: "2"
+
+services:
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile.test
+    command: dotnet test
