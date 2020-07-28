@@ -11,4 +11,4 @@ blocks:
         - name: Build and run tests
           commands:
             - checkout
-            - docker-compose -f docker-compose.backend.test.yml -p ci up
+            - docker-compose -f docker-compose.backend.test.yml -p ci up --exit-code-from backend
