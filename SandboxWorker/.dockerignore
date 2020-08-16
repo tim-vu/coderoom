@@ -1,4 +1,5 @@
-**/__pychache__
+**/__pycache__
 sandbox/code/*
 result_consumer.py
 run.py
+Dockerfile
