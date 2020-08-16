@@ -83,7 +83,7 @@ namespace Infrastructure.Compiler.Compilers.CSharp
             }
             catch (Exception ex)
             {
-                _logger.LogError("Unable to compile", ex);
+                _logger.LogError(ex, "Unable to compile");
                 
                 return output != null ? new CompilationResult(output.StandardOutput) : new CompilationResult("Unknown error occurred");
             }

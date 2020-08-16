@@ -64,7 +64,7 @@ namespace Infrastructure.Compiler.Compilers.Java
             }
             catch (Exception ex)
             {
-                _logger.LogError("Unable to compile", ex);
+                _logger.LogError(ex, "Unable to compile");
 
                 return output != null ? new CompilationResult(output.StandardError) : new CompilationResult("Unknown error occurred");
             }
