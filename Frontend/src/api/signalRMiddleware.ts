@@ -26,7 +26,7 @@ import {
 const connection = new signalR.HubConnectionBuilder()
   .configureLogging(signalR.LogLevel.Debug)
   .withAutomaticReconnect()
-  .withUrl("http://localhost:5000/hubs/room", {
+  .withUrl("https://api.codetwice.net/hubs/room", {
     transport: HttpTransportType.WebSockets,
   })
   .build();

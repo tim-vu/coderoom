@@ -2,7 +2,7 @@ import axios from "axios";
 import { Room } from "./types";
 
 const instance = axios.create({
-  baseURL: "http://localhost:5000/api/",
+  baseURL: "https://api.codetwice.net/api/",
 });
 
 export function createRoom() {
