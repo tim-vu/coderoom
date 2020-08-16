@@ -3,16 +3,15 @@ version: "2.4"
 services:
   redis:
     image: "redis:alpine3.12"
-    container_name: redis
-    command: redis-server
     volumes:
       - "./config/redis/:/usr/local/etc/redis/:rw"
+
   rabbitmq:
-    build: ./config/rabbitmq
-    container_name: rabbitmq
+    image: "rabbitmq:3-management-alpine"
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
+
   sandbox-worker:
     build: ./SandboxWorker
     environment:

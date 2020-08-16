@@ -1,0 +1,129 @@
+version: "3.8"
+
+services:
+  redis:
+    image: "redis:alpine3.12"
+    deploy:
+      mode: global
+      update_config:
+        order: start-first
+      restart_policy:
+        condition: any
+        delay: 5s
+        #max_attemps: 3
+        window: 120s
+    volumes:
+      - "/data/redis:/data"
+    entrypoint: redis-server --appendonly yes
+
+  sandbox-worker:
+    image: "coderoom/sandboxworker:latest"
+
+    environment:
+      RABBITMQ_USERNAME: ${RABBITMQ_USER}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASS}
+      EXECUTABLES_VOLUME: "coderoom_executables"
+
+    command: sh -c './wait-for rabbitmq:5672 -- python worker.py'
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - executables:/app/sandbox/code/
+
+    deploy:
+      replicas: 3
+      update_config:
+        order: start-first
+        parallelism: 1
+        delay: 10s
+      rollback_config:
+        parallelism: 0
+        order: stop-first
+      restart_policy:
+        condition: any
+        delay: 5s
+        #max_attemps: 3
+        window: 120s
+
+    stop_grace_period: 1m30s
+
+  rabbitmq:
+    image: "rabbitmq:3-management-alpine"
+
+    deploy:
+      mode: global
+      update_config:
+        order: start-first
+      restart_policy:
+        condition: any
+        delay: 5s
+        #max_attemps: 3
+        window: 120s
+
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
+
+  nginx:
+    image: "coderoom/nginx:latest"
+
+    ports:
+      - "80:80"
+      - "443:443"
+
+    deploy:
+      mode: global
+      update_config:
+        order: start-first
+        failure_action: rollback
+        delay: 10s
+      rollback_config:
+        parallelism: 0
+        order: stop-first
+      restart_policy:
+        condition: any
+        delay: 5s
+        #max_attemps: 3
+        window: 120s
+
+    volumes:
+      - "/data/certs:/etc/nginx/certs"
+
+    command: sh -c './wait-for web-api:80 -- nginx'
+
+  web-api:
+    image: "coderoom/web-api:latest"
+
+    deploy:
+      mode: global
+      update_config:
+        order: start-first
+        failure_action: rollback
+        delay: 10s
+      rollback_config:
+        parallelism: 0
+        order: stop-first
+      restart_policy:
+        condition: any
+        delay: 5s
+        #max_attemps: 3
+        window: 120s
+
+    healthcheck:
+      test: curl -f http://localhost:80/healthcheck || exit 1
+
+    volumes:
+      - "/data/aspnet:/app/keys/"
+
+    environment:
+      RedisConnection: "redis:6379"
+      EventBusConnection: "rabbitmq:5672"
+      EventBusUsername: ${RABBITMQ_USER}
+      EventBusPassword: ${RABBITMQ_PASS}
+      DataProtectionKeyDirectory: "/app/keys/"
+
+    command: sh -c './wait-for rabbitmq:5672 -- ./wait-for redis:6379 -- ./WebUI'
+
+volumes:
+  executables:
+    name: "coderoom_executables"
