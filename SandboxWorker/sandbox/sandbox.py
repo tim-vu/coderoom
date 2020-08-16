@@ -51,6 +51,7 @@ class NoMainFileError(SandboxError):
 
 
 class Sandbox:
+
     TIME_LIMIT_STEP = 0.1
     OUTPUT_FILE_NAME = 'output.txt'
 
@@ -242,11 +243,10 @@ class Sandbox:
                 self.memory_limit_exceeded = True
 
     def clean_up(self):
-        # self.remove_container()
+        self.remove_container()
 
-        #if os.path.isdir(self.task_directory):
-        #    shutil.rmtree(self.task_directory, ignore_errors=True)
-        pass
+        if os.path.isdir(self.task_directory):
+            shutil.rmtree(self.task_directory, ignore_errors=True)
 
 
 class RunResult:

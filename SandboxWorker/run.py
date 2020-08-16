@@ -1,11 +1,9 @@
 import base64
 import os
 import uuid
-from typing import List
 
 import pika
 
-import settings
 from settings import RABBITMQ_HOST, RABBITMQ_TASK
 import code_execution_pb2 as jobs
 
