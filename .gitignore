@@ -1,4 +1,5 @@
 
+
 ### Jetbrains IDE files
 
 **/.idea/*
@@ -26,3 +27,8 @@
 SandboxWorker/sandbox/code/*
 
 
+### Nginx
+
+config/nginx/localhost.conf
+config/nginx/localhost.crt
+config/nginx/localhost.key
