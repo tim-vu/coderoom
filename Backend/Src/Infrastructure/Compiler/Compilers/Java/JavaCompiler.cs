@@ -12,9 +12,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Compiler.Compilers.Java
 {
-    public class JavaCompiler : ICompiler
+    public class JavaCompiler : BaseCompiler, ICompiler
     {
-        protected readonly string TempDirectory;
         
         public IReadOnlyCollection<Language> Languages { get; } = new List<Language> {Language.Java };
 
@@ -23,8 +22,6 @@ namespace Infrastructure.Compiler.Compilers.Java
         public JavaCompiler(ILogger<JavaCompiler> logger)
         {
             _logger = logger;
-            
-            TempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
 
             Directory.CreateDirectory(TempDirectory);
         }
@@ -69,18 +66,6 @@ namespace Infrastructure.Compiler.Compilers.Java
                 return output != null ? new CompilationResult(output.StandardError) : new CompilationResult("Unknown error occurred");
             }
         }
-        
-        protected async Task WriteFilesToTempDirectory(ICollection<SourceFile> sourceFiles)
-        {
-            foreach (var file in sourceFiles)
-            {
-                await File.WriteAllTextAsync(Path.Combine(TempDirectory, file.Name), file.Content);
-            }
-        }
-        
-        protected void Cleanup()
-        {
-            Directory.Delete(TempDirectory, true);
-        }
+
     }
 }
