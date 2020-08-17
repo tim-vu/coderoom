@@ -34,8 +34,9 @@ namespace WebUI
             services.AddCors(options => options.AddPolicy("ApiCorsPolicy", builder =>
             {
                 builder
-                    .WithOrigins("https://localhost", "https://*.codetwice.net")
+                    .WithOrigins("http://localhost:3000", "https://codetwice.net", "https://www.codetwice.net")
                     .AllowAnyMethod()
+                    .AllowCredentials()
                     .AllowAnyHeader();
             }));
 
@@ -60,9 +61,10 @@ namespace WebUI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IEventBus eventBus)
         {
+
+            app.UseCors("ApiCorsPolicy");
          
             app.UseForwardedHeaders();
-            app.UseCors("ApiCorsPolicy");
 
             app.UseExceptionHandler(options => options.UseStatusCodePages());
 
