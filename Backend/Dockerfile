@@ -14,7 +14,8 @@ RUN dotnet restore
 COPY . .
 RUN dotnet publish -c Release -o /app
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS runtime
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS runtime
+RUN apt-get update && apt-get -y install --no-install-recommends openjdk-11-jdk-headless && apt-get clean && rm -r /var/lib/apt/lists/*
 RUN apt-get -q update && apt-get -qy install netcat
 WORKDIR /app
 COPY --from=build /app .
