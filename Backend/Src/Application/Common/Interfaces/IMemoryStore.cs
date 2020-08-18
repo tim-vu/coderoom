@@ -5,6 +5,7 @@ namespace Application.Common.Interfaces
 {
     public interface IMemoryStore
     {
+        Task<bool> KeyExists(string key);
         Task<ILock> CreateLock(string key);
         
         Task<T> ObjectGet<T>(string key);

@@ -8,6 +8,7 @@ using Application.Rooms.Commands.JoinGroupCall;
 using Application.Rooms.Commands.JoinRoom;
 using Application.Rooms.Commands.LeaveRoom;
 using Application.Rooms.Commands.UpdateText;
+using Application.Rooms.Queries.DoesRoomExist;
 using Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
@@ -23,6 +24,10 @@ namespace WebUI.Hubs
             _mediator = mediator;
         }
 
+        public Task<bool> DoesRoomExist(string roomId)
+        {
+            return _mediator.Send(new DoesRoomExist(roomId));
+        }
         public async Task<RoomVm> JoinRoom(string roomId, string nickName)
         {
            var room = await _mediator.Send(new JoinRoom(roomId, Context.ConnectionId, nickName));

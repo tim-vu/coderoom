@@ -27,6 +27,12 @@ namespace Infrastructure.Redis
             return _lockFactory.CreateLockAsync(key, LockExpiry, LockRetry, LockWait).ContinueWith(t => (ILock)new RedisLock(t.Result));
         }
 
+        public Task<bool> KeyExists(string key)
+        {
+            var db = _connection.GetDatabase();
+            return db.KeyExistsAsync(key);
+        }
+
         public Task ObjectSet<T>(string key, T t)
         {
             var value = JsonSerializer.Serialize(t);
