@@ -8,35 +8,18 @@ import { AppState } from "../../store";
 import { connect } from "react-redux";
 import Footer from "../Footer/Footer";
 import EditorControls from "../EditorControls/EditorControls";
-import NicknameModal from "../NicknameModal/NicknameModal";
 import OutputControls from "../OutputControls/OutputControls";
 import Output from "../Output/Output";
-import { ExecutionState } from "../../store/execution/types";
 import GroupCall from "../GroupCall/GroupCall";
-import { setNickname } from "../../store/users/actions";
-import { ToastContainer } from "react-toastify";
 
 interface RoomParams {
   roomId: string | undefined;
 }
 
-interface RoomProps {
-  nickname: string | null;
-  joinRoom: typeof joinRoom;
-  leaveRoom: typeof leaveRoom;
-  setNickname: typeof setNickname;
-}
-
 const MIN_SPLIT_SIZE = 400;
 const MIN_CODEROOM_WIDTH = 800;
 
-const CodeRoom: React.FC<RoomProps> = ({
-  nickname,
-  joinRoom,
-  leaveRoom,
-  setNickname,
-}) => {
-  const params = useParams<RoomParams>();
+const CodeRoom: React.FC = () => {
   const [split, setSplit] = React.useState(
     Math.max(document.body.clientWidth / 2, MIN_SPLIT_SIZE)
   );
@@ -51,30 +34,11 @@ const CodeRoom: React.FC<RoomProps> = ({
     return () => window.removeEventListener("resize", handleWindowResize);
   }, []);
 
-  useEffect(() => {
-    if (params.roomId === undefined || !nickname) return;
-
-    joinRoom(params.roomId, nickname);
-
-    return () => {
-      leaveRoom();
-    };
-  }, [nickname]);
-
-  const handleNicknameChosen = (nickname: string) => {
-    setNickname(nickname);
-  };
-
   return (
     <div
       className="bg-background absolute inset-0 w-full coderoom"
       style={{ minWidth: MIN_CODEROOM_WIDTH }}
     >
-      <NicknameModal
-        visible={nickname === null}
-        onNicknameChosen={handleNicknameChosen}
-      />
-      <ToastContainer />
       <div className="absolute inset-x-0 top-0 bottom-16">
         <SplitPane
           split="vertical"
@@ -108,8 +72,6 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 export default connect(mapStateToProps, {
-  setNickname,
-  leaveRoom,
   updateText,
-  joinRoom,
+  leaveRoom,
 })(CodeRoom);

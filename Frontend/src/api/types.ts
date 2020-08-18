@@ -20,7 +20,7 @@ export interface Language {
   aceMode: string;
 }
 
-export interface Room {
+export interface RoomVm {
   id: string;
   users: UserVm[];
   text: string;

@@ -24,11 +24,6 @@ export interface UserState {
   nickname: string | null;
 }
 
-export interface SetNickname {
-  type: typeof SET_NICKNAME;
-  nickname: string;
-}
-
 export interface JoinGroupCall {
   type: typeof JOIN_GROUP_CALL;
   stream: MediaStream;
@@ -90,7 +85,6 @@ export interface UserLeft {
 }
 
 export type UserActions =
-  | SetNickname
   | UserJoined
   | JoinGroupCall
   | JoinedGroupCall

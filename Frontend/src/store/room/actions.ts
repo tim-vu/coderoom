@@ -11,9 +11,35 @@ import {
   TypingUserChanged,
   UPDATE_TEXT,
   UpdateText,
+  CheckRoomExists,
+  CHECK_ROOM_EXISTS,
+  RoomError,
+  ROOM_ERROR,
+  RoomExists,
+  ROOM_EXISTS,
 } from "./types";
-import { Language, Room } from "../../api/types";
+import { Language, RoomVm } from "../../api/types";
 import { JOINED_ROOM, JoinedRoom, LEFT_ROOM, LeftRoom } from "../common/types";
+
+export function checkRoomExists(roomId: string): CheckRoomExists {
+  return {
+    type: CHECK_ROOM_EXISTS,
+    roomId,
+  };
+}
+
+export function roomExists(): RoomExists {
+  return {
+    type: ROOM_EXISTS,
+  };
+}
+
+export function roomError(error: string): RoomError {
+  return {
+    type: ROOM_ERROR,
+    error,
+  };
+}
 
 export function joinRoom(roomId: string, nickName: string): JoinRoom {
   return {
@@ -43,7 +69,7 @@ export function textUpdated(text: string): TextUpdated {
   };
 }
 
-export function joinedRoom(room: Room, connectionId: string): JoinedRoom {
+export function joinedRoom(room: RoomVm, connectionId: string): JoinedRoom {
   return {
     type: JOINED_ROOM,
     room,

@@ -1,10 +1,12 @@
 import axios from "axios";
-import { Room } from "./types";
+import { RoomVm } from "./types";
+
+export const BASE_URL = "https://api.codetwice.net";
 
 const instance = axios.create({
-  baseURL: "https://api.codetwice.net/api/",
+  baseURL: BASE_URL + "/api",
 });
 
 export function createRoom() {
-  return instance.post<Room>("/room");
+  return instance.post<RoomVm>("/room");
 }

@@ -11,9 +11,15 @@ const initialState: UserState = {
 
 export function userReducer(state = initialState, action: UserActions) {
   switch (action.type) {
-    case "SET_NICKNAME":
+    case "JOINED_ROOM":
       return produce(state, (draft) => {
-        draft.nickname = action.nickname;
+        draft.users = action.room.users
+          .filter((u) => u.connectionId !== action.connectionId)
+          .map((u) => <User>u);
+        draft.me = <User>(
+          action.room.users.find((u) => u.connectionId === action.connectionId)
+        );
+        draft.nickname = draft.me.nickName;
       });
     case "JOINED_GROUP_CALL":
       return produce(state, (draft) => {
@@ -42,15 +48,6 @@ export function userReducer(state = initialState, action: UserActions) {
             u.inGroupCall = false;
             u.stream = undefined;
           });
-      });
-    case "JOINED_ROOM":
-      return produce(state, (draft) => {
-        draft.users = action.room.users
-          .filter((u) => u.connectionId !== action.connectionId)
-          .map((u) => <User>u);
-        draft.me = <User>(
-          action.room.users.find((u) => u.connectionId === action.connectionId)
-        );
       });
     case "LEFT_ROOM":
       return initialState;

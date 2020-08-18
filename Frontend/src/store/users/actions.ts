@@ -13,7 +13,6 @@ import {
   SendAnswerData,
   SendOfferData,
   SET_NICKNAME,
-  SetNickname,
   STREAM_CONNECTED,
   StreamConnected,
   USER_JOINED,
@@ -25,13 +24,6 @@ import {
   UserLeft,
   UserLeftGroupCall,
 } from "./types";
-
-export function setNickname(nickname: string): SetNickname {
-  return {
-    type: SET_NICKNAME,
-    nickname,
-  };
-}
 
 export function joinGroupCall(stream: MediaStream): JoinGroupCall {
   return {

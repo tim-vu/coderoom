@@ -7,9 +7,11 @@ import {
   leftRoom,
   textUpdated,
   typingUserChanged,
+  roomError,
+  roomExists,
 } from "../store/room/actions";
 import { Middleware, MiddlewareAPI, Store } from "redux";
-import { getLanguageByKey, Language, Room, User } from "./types";
+import { getLanguageByKey, Language, RoomVm, User } from "./types";
 import {
   joinedGroupCall,
   receivedAnswerData,
@@ -22,32 +24,67 @@ import {
   codeExecutionCompleted,
   codeExecutionStarted,
 } from "../store/execution/actions";
+import { BASE_URL } from "./codeRoomAPI";
 
 const connection = new signalR.HubConnectionBuilder()
   .configureLogging(signalR.LogLevel.Debug)
   .withAutomaticReconnect()
-  .withUrl("https://api.codetwice.net/hubs/room", {
+  .withUrl(BASE_URL + "/hubs/room", {
     transport: HttpTransportType.WebSockets,
   })
   .build();
+
+const INTERESTING_ACTION_TYPES = [
+  "CHECK_ROOM_EXISTS",
+  "JOIN_ROOM",
+  "JOIN_GROUP_CALL",
+  "SEND_OFFER_DATA",
+  "SEND_ANSWER_DATA",
+  "LEAVE_ROOM",
+  "UPDATE_TEXT",
+  "CHANGE_LANGUAGE",
+  "START_CODE_EXECUTION",
+];
 
 export const signalRMiddleware: Middleware<Store<AppState, Action>> = (
   store
 ) => (next) => async (action: Action) => {
   const { dispatch } = store;
 
+  if (!INTERESTING_ACTION_TYPES.includes(action.type)) {
+    return next(action);
+  }
+
+  if (action.type === "CHECK_ROOM_EXISTS") {
+    try {
+      await initializeSignalR(store);
+    } catch (e) {
+      dispatch(roomError("Unable to establish a connection with the server"));
+      console.log(e);
+      return;
+    }
+
+    const exists = await connection.invoke<boolean>(
+      "DoesRoomExist",
+      action.roomId
+    );
+
+    if (!exists) {
+      dispatch(roomError("The room you tried to join does not exist"));
+      return;
+    }
+
+    dispatch(roomExists());
+    return;
+  }
+
+  if (connection.state !== HubConnectionState.Connected) {
+    return;
+  }
+
   switch (action.type) {
     case "JOIN_ROOM":
-      if (connection.state !== HubConnectionState.Connected) {
-        try {
-          await initializeSignalR(store);
-        } catch (e) {
-          console.error(e);
-          return;
-        }
-      }
-
-      const room = await connection.invoke<Room>(
+      const room = await connection.invoke<RoomVm>(
         "JoinRoom",
         action.roomId,
         action.nickName
@@ -85,8 +122,6 @@ export const signalRMiddleware: Middleware<Store<AppState, Action>> = (
       await connection.send("StartCodeExecution");
       dispatch(codeExecutionStarted(undefined));
       break;
-    default:
-      return next(action);
   }
 };
 
@@ -135,6 +170,21 @@ const initializeSignalR: (store: MiddlewareAPI) => void = ({
 
   connection.on("OnUserJoinedGroupCall", (connectionId: string) => {
     dispatch(userJoinedGroupCall(connectionId));
+  });
+
+  connection.onclose((error) => {
+    if (error) {
+      dispatch(roomError("The connection to the server closed unexpectedly"));
+      console.log(error);
+    }
+  });
+
+  connection.onreconnecting(() => {
+    console.log("Reconnection");
+  });
+
+  connection.onreconnected(() => {
+    console.log("Reconnected");
   });
 
   return connection.start();
