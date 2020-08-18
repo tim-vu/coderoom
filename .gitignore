@@ -11,11 +11,12 @@
 **/*.DotSettings.user
 
 
-### Node.js
+### Frontend
 
 **/node_modules/*
 **/.vscode/*
 **/package-lock.json
+Frontend/src/styles/app.css
 
 ### Python
 
