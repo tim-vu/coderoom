@@ -30,11 +30,10 @@ namespace WebUI
             services.AddDataProtection()
                 .PersistKeysToFileSystem(new System.IO.DirectoryInfo(Configuration.GetValue<string>("DataProtectionKeyDirectory")));
 
-
             services.AddCors(options => options.AddPolicy("ApiCorsPolicy", builder =>
             {
                 builder
-                    .WithOrigins("http://localhost:3000", "https://codetwice.net", "https://www.codetwice.net")
+                    .WithOrigins("http://localhost:3000", "http://localhost:5000", "https://codetwice.net", "https://www.codetwice.net")
                     .AllowAnyMethod()
                     .AllowCredentials()
                     .AllowAnyHeader();
@@ -64,7 +63,9 @@ namespace WebUI
 
             app.UseCors("ApiCorsPolicy");
          
-            app.UseForwardedHeaders();
+            if(!env.IsDevelopment()){
+                app.UseForwardedHeaders();
+            }
 
             app.UseExceptionHandler(options => options.UseStatusCodePages());
 
