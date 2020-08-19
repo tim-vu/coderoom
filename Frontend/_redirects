@@ -1,0 +1,4 @@
+
+/app/static/* /app/static/:splat
+/app/* /app/index.html 200
+/* /index.html 200

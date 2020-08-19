@@ -1,6 +1,6 @@
 {
   "name": "webui",
-  "homepage": "/app/",
+  "homepage": "https://codetwice.net/app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

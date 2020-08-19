@@ -16,8 +16,10 @@
 **/node_modules/*
 **/.vscode/*
 **/package-lock.json
-Frontend/src/styles/app.css
-
+**/build/*
+**/src/styles/app.css
+**/.cache/*
+Frontend/public/*
 ### Python
 
 **/__pycache__/*

@@ -1,0 +1,38 @@
+{
+  "name": "landing",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run watch:css & parcel --out-dir build --port 5000 src/*.html",
+    "build": "npm run build:css && parcel build --out-dir build --no-source-maps src/*.html",
+    "build:css": "postcss src/styles/tailwind.css -o src/styles/app.css",
+    "watch:css": "postcss src/styles/tailwind.css -o src/styles/app.css -w"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^9.8.6",
+    "cssnano": "^4.1.10",
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-custom-dist-structure": "^1.1.14",
+    "parcel-plugin-html-partials": "0.0.6",
+    "parcel-plugin-nuke-dist": "^1.0.1",
+    "postcss-cli": "^7.1.1",
+    "tailwindcss": "^1.7.1",
+    "typescript": "^3.9.7"
+  },
+  "dependencies": {},
+  "customDistStructure": {
+    "config": {
+      "assets": [
+        ".css",
+        ".js"
+      ]
+    },
+    "options": {
+      "development": true
+    }
+  }
+}
