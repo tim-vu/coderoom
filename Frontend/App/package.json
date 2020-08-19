@@ -55,7 +55,7 @@
   },
   "scripts": {
     "start": "npm run watch:css & rimraf ./build && react-scripts start",
-    "build": "npm run build:css & react-scripts build",
+    "build": "npm run build:css && react-scripts build",
     "test": "cross-env CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "build:css": "postcss src/styles/tailwind.css -o src/styles/app.css",
