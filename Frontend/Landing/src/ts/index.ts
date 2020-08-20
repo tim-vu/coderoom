@@ -11,8 +11,10 @@ menuButton.onclick = () => {
   else classList.add("menu-visible");
 };
 
-tryButton.onclick = async () => {
-  const room = await createRoom();
+if (tryButton) {
+  tryButton.onclick = async () => {
+    const room = await createRoom();
 
-  window.location.href = "https://codetwice.net/app/" + room.id;
-};
+    window.location.href = "https://codetwice.net/app/" + room.id;
+  };
+}

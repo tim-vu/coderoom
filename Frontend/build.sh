@@ -8,11 +8,9 @@ npm run --prefix App build; exit_1=$?
 
 cp -r ./App/build/* ./public/app/
 
-export NODE_ENV=production
-
 npm install --prefix Landing
 npm install --prefix Landing --only=dev 
-npm run --prefix Landing build; exit_2=$?
+npm run --prefix Landing --production build; exit_2=$?
 
 cp -r ./Landing/build/* ./public/
 
