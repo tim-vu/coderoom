@@ -1,8 +1,9 @@
+using System;
 using System.Text.Json;
 
 namespace WebUI.Integration.Tests.Common
 {
-    public class Serializer
+    public static class Serializer
     {
         private static readonly JsonSerializerOptions Options = new JsonSerializerOptions()
         {

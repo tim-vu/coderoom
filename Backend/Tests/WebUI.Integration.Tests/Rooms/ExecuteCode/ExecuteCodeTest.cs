@@ -59,14 +59,14 @@ namespace WebUI.Integration.Tests.Rooms.ExecuteCode
             
             await Connection1.JoinRoom(roomId, Data.Nickname1);
 
-            await Connection1.InvokeAsync(nameof(RoomHub.ChangeLanguage), language);
+            await Connection1.InvokeAsync(nameof(RoomHub.ChangeLanguage), language, false);
 
             await Connection1.InvokeAsync(nameof(RoomHub.UpdateText), code);
             await Connection1.InvokeAsync(nameof(RoomHub.StartCodeExecution));
 
             await Task.WhenAll(
                 onCodeExecutionStarted.VerifyWithTimeout(c => c.Invoke(It.IsAny<string>()), Times.Once(), 2000),
-                onCodeExecutionCompleted.VerifyWithTimeout(c => c.Invoke(It.Is<string>(s => s == Output)),
+                onCodeExecutionCompleted.VerifyWithTimeout(c => c.Invoke(Output),
                     Times.Once(), 10000));
         }
     }

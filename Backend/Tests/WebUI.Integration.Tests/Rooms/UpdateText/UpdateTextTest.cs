@@ -61,7 +61,7 @@ namespace WebUI.Integration.Tests.Rooms.UpdateText
             await Connection1.UpdateText(text1);
 
             await Task.WhenAll(
-                onTextChanged1.VerifyWithTimeout(c => c.Invoke(It.Is<string>(s => s == text2)), Times.Exactly(2), 2000),
+                onTextChanged1.VerifyWithTimeout(c => c.Invoke(text2), Times.Exactly(2), 2000),
                 onTextChanged2.VerifyWithTimeout(c => c.Invoke(It.IsAny<string>()), Times.Never(), 2000)
             );
         }
