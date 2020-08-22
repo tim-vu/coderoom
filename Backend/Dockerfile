@@ -9,6 +9,7 @@ COPY Src/WebUI/WebUI.csproj Src/WebUI/WebUI.csproj
 
 COPY Tests/Application.Test/Application.Test.csproj Tests/Application.Test/Application.Test.csproj
 COPY Tests/Infrastructure.Tests/Infrastructure.Tests.csproj Tests/Infrastructure.Tests/Infrastructure.Tests.csproj
+COPY Tests/WebUI.Integration.Tests/WebUI.Integration.Tests.csproj Tests/WebUI.Integration.Tests/WebUI.Integration.Tests.csproj
 RUN dotnet restore
 
 COPY . .
