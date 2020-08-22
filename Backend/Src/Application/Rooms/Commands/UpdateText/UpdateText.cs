@@ -59,9 +59,9 @@ namespace Application.Rooms.Commands.UpdateText
                     throw new IllegalOperationException("Unable to update text: user not in room");
                 }
                 
-                //TODO: send actual text back to user to prevent inconsistencies
                 if (!_roomTextLock.CanWrite(room, request.ConnectionId))
                 {
+                    _ = _roomService.NotifySingleUserTextChanged(room, request.ConnectionId);
                     return Unit.Value;
                 }
 

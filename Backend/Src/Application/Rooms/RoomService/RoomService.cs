@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Common.Interfaces;
@@ -20,6 +21,11 @@ namespace Application.Rooms.RoomService
         {
             var recipients = room.Users.Select(u => u.ConnectionId).Where(id => id != callerConnectionId).ToList();
             return _hubContext.Send(recipients, "OnTextChanged", room.Text);
+        }
+
+        public Task NotifySingleUserTextChanged(Room room, string connectionId)
+        {
+            return _hubContext.Send(new List<string>() {connectionId}, "OnTextChanged", room.Text);
         }
 
         public Task NotifyTypingUserChanged(Room room)

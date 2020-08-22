@@ -7,6 +7,8 @@ namespace Application.Rooms.RoomService
     {
         Task NotifyTextChanged(Room room, string callerConnectionId);
 
+        Task NotifySingleUserTextChanged(Room room, string connectionId);
+
         Task NotifyTypingUserChanged(Room room);
 
         Task NotifyUserJoined(Room room, User user);
