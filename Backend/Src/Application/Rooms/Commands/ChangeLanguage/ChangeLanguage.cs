@@ -17,23 +17,28 @@ namespace Application.Rooms.Commands.ChangeLanguage
         public string ConnectionId { get; }
 
         public Language Language { get; }
+        
+        public bool Reset { get; } 
 
-        public ChangeLanguage(string roomId, string connectionId, Language language)
+        public ChangeLanguage(string roomId, string connectionId, Language language, bool reset)
         {
             RoomId = roomId;
             ConnectionId = connectionId;
             Language = language;
+            Reset = reset;
         }
         
         public class ChangeLanguageHandler : IRequestHandler<ChangeLanguage, Unit>
         {
             private readonly IMemoryStore _store;
-            private readonly IRoomService _roomService;
+            private readonly IRoomNotifier _roomNotifier;
+            private readonly ITemplateService _templateService;
 
-            public ChangeLanguageHandler(IMemoryStore store, IRoomService roomService)
+            public ChangeLanguageHandler(IMemoryStore store, IRoomNotifier roomNotifier, ITemplateService templateService)
             {
                 _store = store;
-                _roomService = roomService;
+                _roomNotifier = roomNotifier;
+                _templateService = templateService;
             }
 
             public async Task<Unit> Handle(ChangeLanguage request, CancellationToken cancellationToken)
@@ -58,10 +63,18 @@ namespace Application.Rooms.Commands.ChangeLanguage
 
                     room.Language = request.Language;
 
+                    if (request.Reset)
+                        room.Text = _templateService.GetLanguageTemplate(request.Language);
+
                     await _store.ObjectSet(request.RoomId, room);
                 }
 
-                _ = _roomService.NotifyLanguageChanged(room, request.ConnectionId);
+                if (request.Reset)
+                {
+                    _ = _roomNotifier.NotifyTextChanged(room, string.Empty);
+                }
+                
+                _ = _roomNotifier.NotifyLanguageChanged(room, request.ConnectionId);
                 return Unit.Value;
             }
         }

@@ -20,6 +20,7 @@ namespace Application.Test.Rooms.Commands
         private readonly Mock<ILock> _lock = new Mock<ILock>();
         private readonly Mock<IMemoryStore> _store = new Mock<IMemoryStore>();
         private readonly Room _room = BogusData.Room.Generate();
+        private readonly Mock<IRoomNotifier> _roomService = new Mock<IRoomNotifier>();
 
         public JoinRoomHandlerTest()
         {
@@ -34,9 +35,7 @@ namespace Application.Test.Rooms.Commands
 
             _store.Setup(s => s.ObjectGet<Room>(_room.Id)).ReturnsAsync(_room);
 
-            var roomService = new Mock<IRoomService>();
-
-            var joinRoomHandler = new JoinRoom.JoinRoomHandler(_store.Object, roomService.Object, Mapper);
+            var joinRoomHandler = new JoinRoom.JoinRoomHandler(_store.Object, _roomService.Object, Mapper);
 
             var result = await joinRoomHandler.Handle(new JoinRoom(_room.Id, user.ConnectionId, user.NickName), CancellationToken.None);
 
@@ -51,7 +50,7 @@ namespace Application.Test.Rooms.Commands
             _lock.Verify(l => l.IsAcquired);
             _lock.Verify(l => l.Dispose());
             
-            roomService.Verify(r => r.NotifyUserJoined(_room, It.Is<User>(u => u.ConnectionId == user.ConnectionId && u.NickName == user.NickName)));
+            _roomService.Verify(r => r.NotifyUserJoined(_room, It.Is<User>(u => u.ConnectionId == user.ConnectionId && u.NickName == user.NickName)));
         }
 
         [Fact]
@@ -59,9 +58,7 @@ namespace Application.Test.Rooms.Commands
         {
             var user = BogusData.User.Generate();
 
-            var roomService = new Mock<IRoomService>();
-            
-            var joinRoomHandler = new JoinRoom.JoinRoomHandler(_store.Object, roomService.Object, Mapper);
+            var joinRoomHandler = new JoinRoom.JoinRoomHandler(_store.Object, _roomService.Object, Mapper);
 
             Func<Task> act = async () =>
                 await joinRoomHandler.Handle(new JoinRoom(_room.Id, user.ConnectionId, user.NickName), CancellationToken.None);

@@ -20,5 +20,16 @@
     <ItemGroup>
         <Protobuf Include="**/*.proto" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Rooms\RoomService\Templates\Solution.cs" />
+      <Content Include="Rooms\TemplateService\Templates\Solution.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Rooms\RoomService\Templates\Solution.java" />
+      <Content Include="Rooms\TemplateService\Templates\Solution.java">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
     
 </Project>

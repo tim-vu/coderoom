@@ -8,11 +8,11 @@ using Domain.Enums;
 
 namespace Application.Rooms.RoomService
 {
-    public class RoomService : IRoomService
+    public class RoomNotifier : IRoomNotifier
     {
         private readonly IHubContext _hubContext;
 
-        public RoomService(IHubContext hubContext)
+        public RoomNotifier(IHubContext hubContext)
         {
             _hubContext = hubContext;
         }

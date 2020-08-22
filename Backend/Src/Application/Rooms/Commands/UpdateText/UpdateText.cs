@@ -28,16 +28,16 @@ namespace Application.Rooms.Commands.UpdateText
         public class UpdateTextHandler : IRequestHandler<UpdateText>
         {
             private readonly IMemoryStore _memoryStore;
-            private readonly IRoomService _roomService;
+            private readonly IRoomNotifier _roomNotifier;
             private readonly IRoomTextLock _roomTextLock;
             private readonly IDateTime _dateTime;
 
-            public UpdateTextHandler(IMemoryStore memoryStore, IRoomService roomService, IDateTime dateTime, IRoomTextLock roomTextLock)
+            public UpdateTextHandler(IMemoryStore memoryStore, IRoomNotifier roomNotifier, IDateTime dateTime, IRoomTextLock roomTextLock)
             {
                 _memoryStore = memoryStore;
                 _dateTime = dateTime;
                 _roomTextLock = roomTextLock;
-                _roomService = roomService;
+                _roomNotifier = roomNotifier;
             }
 
             public async Task<Unit> Handle(UpdateText request, CancellationToken cancellationToken)
@@ -61,7 +61,7 @@ namespace Application.Rooms.Commands.UpdateText
                 
                 if (!_roomTextLock.CanWrite(room, request.ConnectionId))
                 {
-                    _ = _roomService.NotifySingleUserTextChanged(room, request.ConnectionId);
+                    _ = _roomNotifier.NotifySingleUserTextChanged(room, request.ConnectionId);
                     return Unit.Value;
                 }
 
@@ -77,10 +77,10 @@ namespace Application.Rooms.Commands.UpdateText
                 
                 await _memoryStore.ObjectSet(request.RoomId, room);
                     
-                _ = _roomService.NotifyTextChanged(room, request.ConnectionId);
+                _ = _roomNotifier.NotifyTextChanged(room, request.ConnectionId);
                 
                 if(typingUserChanged)
-                    _ = _roomService.NotifyTypingUserChanged(room);
+                    _ = _roomNotifier.NotifyTypingUserChanged(room);
                 
                 return Unit.Value;
             }

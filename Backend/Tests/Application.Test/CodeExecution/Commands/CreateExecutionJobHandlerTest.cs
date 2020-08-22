@@ -20,7 +20,7 @@ namespace Application.Test.CodeExecution.Commands
     {
         private readonly Mock<ILock> _lock = new Mock<ILock>();
         private readonly Mock<IMemoryStore> _store = new Mock<IMemoryStore>();
-        private readonly Mock<IRoomService> _roomService = new Mock<IRoomService>();
+        private readonly Mock<IRoomNotifier> _roomService = new Mock<IRoomNotifier>();
         
         public CreateExecutionJobHandlerTest()
         {

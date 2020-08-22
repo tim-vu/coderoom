@@ -33,7 +33,7 @@ namespace Application.Test.Rooms.Commands
             store.Setup(s => s.ObjectGet<Room>(room.Id)).ReturnsAsync(room);
             store.Setup(s => s.CreateLock(room.Id)).ReturnsAsync(@lock.Object);
 
-            var roomService = new Mock<IRoomService>();
+            var roomService = new Mock<IRoomNotifier>();
             
             var leaveRoomHandler = new LeaveRoom.LeaveRoomHandler(store.Object, roomService.Object);
 
@@ -65,7 +65,7 @@ namespace Application.Test.Rooms.Commands
             store.Setup(s => s.ObjectGet<Room>(room.Id)).ReturnsAsync(room);
             store.Setup(s => s.CreateLock(room.Id)).ReturnsAsync(@lock.Object);
 
-            var roomService = new Mock<IRoomService>();
+            var roomService = new Mock<IRoomNotifier>();
             
             var leaveRoomHandler = new LeaveRoom.LeaveRoomHandler(store.Object, roomService.Object);
 
@@ -95,7 +95,7 @@ namespace Application.Test.Rooms.Commands
             var store = new Mock<IMemoryStore>();
             store.Setup(s => s.CreateLock(It.IsAny<string>())).ReturnsAsync(@lock.Object);
 
-            var roomService = new Mock<IRoomService>();
+            var roomService = new Mock<IRoomNotifier>();
             
             var leaveRoomHandler = new LeaveRoom.LeaveRoomHandler(store.Object, roomService.Object);
 

@@ -6,6 +6,7 @@ using Application.Common.Middleware;
 using Application.Common.Protos;
 using Application.Rooms.RoomService;
 using Application.Rooms.RoomTextLock;
+using Application.Rooms.TemplateService;
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,7 +22,8 @@ namespace Application
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationMiddleware<,>));
 
             services.AddTransient<IRoomTextLock, RoomTextLock>();
-            services.AddTransient<IRoomService, RoomService>();
+            services.AddTransient<IRoomNotifier, RoomNotifier>();
+            services.AddSingleton<ITemplateService, TemplateService>();
 
             services.AddTransient<IExecutionJobService, ExecutionJobService>();
             services.AddTransient<IEventHandler<ExecutionJobResult>, ExecutionJobCompletedEventHandler>();

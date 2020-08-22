@@ -55,10 +55,10 @@ namespace WebUI.Hubs
         }
 
         
-        public Task ChangeLanguage(Language language)
+        public Task ChangeLanguage(Language language, bool reset)
         {
             var roomId = (string) Context.Items["RoomId"];
-            return _mediator.Send(new ChangeLanguage(roomId, Context.ConnectionId, language));
+            return _mediator.Send(new ChangeLanguage(roomId, Context.ConnectionId, language, reset));
         }
 
         public Task StartCodeExecution()

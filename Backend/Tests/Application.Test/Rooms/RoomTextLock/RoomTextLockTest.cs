@@ -14,7 +14,7 @@ namespace Application.Test.Rooms.RoomTextLock
     public class RoomTextLockTest
     {
         private readonly Mock<ITaskRunner> _taskMock = new Mock<ITaskRunner>();
-        private readonly Mock<IRoomService> _roomService = new Mock<IRoomService>();
+        private readonly Mock<IRoomNotifier> _roomService = new Mock<IRoomNotifier>();
         private readonly Mock<ILock> _lock = new Mock<ILock>();
         private readonly Mock<IMemoryStore> _memoryStore = new Mock<IMemoryStore>();
         private readonly Room _room = BogusData.Room.Generate();

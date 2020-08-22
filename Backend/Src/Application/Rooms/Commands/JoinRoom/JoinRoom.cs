@@ -27,13 +27,13 @@ namespace Application.Rooms.Commands.JoinRoom
         public class JoinRoomHandler : IRequestHandler<JoinRoom, RoomVm>
         {
             private readonly IMemoryStore _memoryStore;
-            private readonly IRoomService _roomService ;
+            private readonly IRoomNotifier _roomNotifier ;
             private readonly IMapper _mapper;
 
-            public JoinRoomHandler(IMemoryStore memoryStore, IRoomService roomService, IMapper mapper)
+            public JoinRoomHandler(IMemoryStore memoryStore, IRoomNotifier roomNotifier, IMapper mapper)
             {
                 _memoryStore = memoryStore;
-                _roomService = roomService;
+                _roomNotifier = roomNotifier;
                 _mapper = mapper;
             }
 
@@ -56,7 +56,7 @@ namespace Application.Rooms.Commands.JoinRoom
 
                 await _memoryStore.ObjectSet(request.RoomId, room);
 
-                _ = _roomService.NotifyUserJoined(room, newUser);
+                _ = _roomNotifier.NotifyUserJoined(room, newUser);
                 
                 return _mapper.Map<RoomVm>(room);
             }

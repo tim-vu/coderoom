@@ -30,14 +30,14 @@ namespace Application.CodeExecution.Commands.CreateExecutionJob
             private readonly IMemoryStore _memoryStore;
             private readonly IExecutionJobService _executionJobService;
             private readonly IIdGenerator _idGenerator;
-            private readonly IRoomService _roomService;
+            private readonly IRoomNotifier _roomNotifier;
             
-            public CreateExecutionJobHandler(IMemoryStore memoryStore, IIdGenerator idGenerator, IExecutionJobService executionJobService, IRoomService roomService)
+            public CreateExecutionJobHandler(IMemoryStore memoryStore, IIdGenerator idGenerator, IExecutionJobService executionJobService, IRoomNotifier roomNotifier)
             {
                 _memoryStore = memoryStore;
                 _idGenerator = idGenerator;
                 _executionJobService = executionJobService;
-                _roomService = roomService;
+                _roomNotifier = roomNotifier;
             }
 
             public async Task<Unit> Handle(CreateExecutionJob request, CancellationToken cancellationToken)
@@ -79,7 +79,7 @@ namespace Application.CodeExecution.Commands.CreateExecutionJob
                     }
                 };
 
-                await _roomService.NotifyCodeExecutionStarted(room, room.Users.First(u => u.ConnectionId == request.ConnectionId).NickName, room.Text.Split(Environment.NewLine).Length);
+                await _roomNotifier.NotifyCodeExecutionStarted(room, room.Users.First(u => u.ConnectionId == request.ConnectionId).NickName, room.Text.Split(Environment.NewLine).Length);
                 
                 _ = _executionJobService.StartJob(room.Id, id, room.Language, sourceFiles);
                 _ = _executionJobService.TimeoutJob(room.Id, id);

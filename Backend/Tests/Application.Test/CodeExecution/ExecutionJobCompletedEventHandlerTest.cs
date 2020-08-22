@@ -15,7 +15,7 @@ namespace Application.Test.CodeExecution
     {
         private readonly Mock<IMemoryStore> _store = new Mock<IMemoryStore>();
         private readonly Mock<ILock> _lock = new Mock<ILock>();
-        private readonly Mock<IRoomService> _roomService = new Mock<IRoomService>();
+        private readonly Mock<IRoomNotifier> _roomService = new Mock<IRoomNotifier>();
         private readonly Room _room = BogusData.Room.Generate();
         private readonly ExecutionJobResult _event;
         private readonly ExecutionJobCompletedEventHandler _handler;

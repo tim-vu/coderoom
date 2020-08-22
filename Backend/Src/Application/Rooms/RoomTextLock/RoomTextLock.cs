@@ -12,14 +12,14 @@ namespace Application.Rooms.RoomTextLock
         private static readonly TimeSpan LockDuration = TimeSpan.FromSeconds(1);
         
         private readonly IMemoryStore _memoryStore;
-        private readonly IRoomService _roomService;
+        private readonly IRoomNotifier _roomNotifier;
         private readonly IDateTime _dateTime;
         private readonly ITaskRunner _taskRunner;
 
-        public RoomTextLock(IMemoryStore memoryStore, IRoomService roomService, IDateTime dateTime, ITaskRunner taskRunner)
+        public RoomTextLock(IMemoryStore memoryStore, IRoomNotifier roomNotifier, IDateTime dateTime, ITaskRunner taskRunner)
         {
             _memoryStore = memoryStore;
-            _roomService = roomService;
+            _roomNotifier = roomNotifier;
             _dateTime = dateTime;
             _taskRunner = taskRunner;
         }
@@ -53,7 +53,7 @@ namespace Application.Rooms.RoomTextLock
 
                 await _memoryStore.ObjectSet(room.Id, room);
 
-                _ = _roomService.NotifyTypingUserChanged(room);
+                _ = _roomNotifier.NotifyTypingUserChanged(room);
             });
         }
     }

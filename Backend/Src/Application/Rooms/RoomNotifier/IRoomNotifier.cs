@@ -3,7 +3,7 @@ using Domain.Entities;
 
 namespace Application.Rooms.RoomService
 {
-    public interface IRoomService
+    public interface IRoomNotifier
     {
         Task NotifyTextChanged(Room room, string callerConnectionId);
 

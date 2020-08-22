@@ -94,7 +94,7 @@ namespace WebUI
             if(env.IsDevelopment()){
                 app.UseSpa(spa =>
                 {
-                    spa.Options.SourcePath = "../../../Frontend";
+                    spa.Options.SourcePath = "../../../Frontend/App";
 
                     if (env.IsDevelopment())
                     {

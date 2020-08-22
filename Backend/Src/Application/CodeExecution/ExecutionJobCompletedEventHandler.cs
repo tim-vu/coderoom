@@ -10,12 +10,12 @@ namespace Application.CodeExecution
     public class ExecutionJobCompletedEventHandler : IEventHandler<ExecutionJobResult>
     {
         private readonly IMemoryStore _store;
-        private readonly IRoomService _roomService;
+        private readonly IRoomNotifier _roomNotifier;
 
-        public ExecutionJobCompletedEventHandler(IMemoryStore store, IRoomService roomService)
+        public ExecutionJobCompletedEventHandler(IMemoryStore store, IRoomNotifier roomNotifier)
         {
             _store = store;
-            _roomService = roomService;
+            _roomNotifier = roomNotifier;
         }
 
         public async Task Handle(ExecutionJobResult @event)
@@ -35,7 +35,7 @@ namespace Application.CodeExecution
 
             await _store.ObjectSet(room.Id, room);
 
-            _ = _roomService.NotifyCodeExecutionCompleted(room);
+            _ = _roomNotifier.NotifyCodeExecutionCompleted(room);
         }
     }
 }

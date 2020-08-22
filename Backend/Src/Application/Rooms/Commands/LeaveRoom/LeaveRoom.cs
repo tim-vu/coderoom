@@ -23,12 +23,12 @@ namespace Application.Rooms.Commands.LeaveRoom
         public class LeaveRoomHandler : IRequestHandler<LeaveRoom>
         {
             private readonly IMemoryStore _memoryStore;
-            private readonly IRoomService _roomService;
+            private readonly IRoomNotifier _roomNotifier;
 
-            public LeaveRoomHandler(IMemoryStore memoryStore, IRoomService roomService)
+            public LeaveRoomHandler(IMemoryStore memoryStore, IRoomNotifier roomNotifier)
             {
                 _memoryStore = memoryStore;
-                _roomService = roomService;
+                _roomNotifier = roomNotifier;
             }
 
             public async Task<Unit> Handle(LeaveRoom request, CancellationToken cancellationToken)
@@ -54,14 +54,14 @@ namespace Application.Rooms.Commands.LeaveRoom
 
                     await _memoryStore.ObjectSet(request.RoomId, room);
 
-                    _ = _roomService.NotifyTypingUserChanged(room);
-                    _ = _roomService.NotifyUserLeft(room, request.ConnectionId);
+                    _ = _roomNotifier.NotifyTypingUserChanged(room);
+                    _ = _roomNotifier.NotifyUserLeft(room, request.ConnectionId);
                     return Unit.Value;
                 }
                 
                 await _memoryStore.ObjectSet(request.RoomId, room);
 
-                _ = _roomService.NotifyUserLeft(room, request.ConnectionId);
+                _ = _roomNotifier.NotifyUserLeft(room, request.ConnectionId);
                 
                 return Unit.Value;
             }

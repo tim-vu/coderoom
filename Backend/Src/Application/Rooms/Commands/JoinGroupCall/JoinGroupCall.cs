@@ -24,12 +24,12 @@ namespace Application.Rooms.Commands.JoinGroupCall
         public class JoinGroupCallHandler : IRequestHandler<JoinGroupCall, Unit>
         {
             private readonly IMemoryStore _store;
-            private readonly IRoomService _roomService;
+            private readonly IRoomNotifier _roomNotifier;
 
-            public JoinGroupCallHandler(IMemoryStore store, IRoomService roomService)
+            public JoinGroupCallHandler(IMemoryStore store, IRoomNotifier roomNotifier)
             {
                 _store = store;
-                _roomService = roomService;
+                _roomNotifier = roomNotifier;
             }
 
             public async Task<Unit> Handle(JoinGroupCall request, CancellationToken cancellationToken)
@@ -56,7 +56,7 @@ namespace Application.Rooms.Commands.JoinGroupCall
 
                 await _store.ObjectSet(request.RoomId, room);
 
-                _ = _roomService.NotifyUserJoinedGroupCall(room, request.ConnectionId);
+                _ = _roomNotifier.NotifyUserJoinedGroupCall(room, request.ConnectionId);
                 
                 return Unit.Value;
             }
