@@ -18,6 +18,10 @@
   @apply block py-2 text-lg;
 }
 
+main section:first-child {
+  background: rgba(0, 0, 0, 0) linear-gradient(rgb(255, 255, 255) 0%, rgb(240, 244, 255) 20%, rgb(240, 244, 255) 80%) repeat scroll 0 0;
+}
+
 footer {
   background: linear-gradient(38deg, #0b0b0b 0%, #1c1c1c 20%, #333 100%);
 }

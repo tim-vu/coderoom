@@ -2,6 +2,10 @@
   "files": ["src/ts/index.ts"],
   "compilerOptions": {
     "noImplicitAny": true,
-    "target": "es5"
+    "target": "es5",
+    "lib": [
+      "es2015",
+      "dom"
+    ]
   }
 }

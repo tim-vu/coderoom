@@ -5,18 +5,40 @@
     @partial("./partials/header.html")
     <main class="flex-grow">
       <section class="mt-18 py-16 px-5">
-        <h2 class="text-xl font-semibold text-black">
-          Ace your next technical one-on-one interview
+        <h2 class="text-xl font-semibold text-black md:text-4xl">
+          Elevate your problem solving skills to the next level
         </h2>
-        <p class="text-black font-light">
-          Sharpen your skills in a realistic environment
+        <p class="text-black font-light md:text-2xl">
+          Practice mock interviews in a real environment
         </p>
 
         <div class="mt-6">
-          <button id="try-button" class="bg-primary rounded-md px-4 py-2">
-            <p class="text-white">Try it now</p>
+          <button id="try-button" class="bg-primary rounded-md px-4 py-2 text-white">
+            Try it now
           </button>
         </div>
+
+        <div class="mt-32 flex flex-col items-start px-4 md:mt-40">
+
+          <h2 class="text-2xl text-black font-semibold mb-12 w-full text-center md:text-4xl">Why CodeTwice?</h2>
+
+          <div class="mb-12 md:mb-16">
+            <h3 class="text-xl text-black font-medium opacity-high md:text-2xl">Multiple languages</h3>
+            <p class="md:text-lg">With over two supported languages you can express yourself in your language of choice or improve your weaknesses</p>
+          </div>
+
+          <div class="mb-12">
+            <h3 class="text-xl text-black font-medium opacity-high md:text-2xl">Code Execution</h3>
+            <p class="md:text-lg">Execute your code and view its output with leaving your browser</p>
+          </div>
+
+          <div class="mb-12">
+            <h3 class="text-xl text-black font-medium opacity-high md:text-2xl">Voice chat</h3>
+            <p class="md:text-lg">Learn to communicate clearly with your interviewer and to articulate your thought process in great detail</p>
+          </div>
+
+        </div>
+
       </section>
     </main>
     @partial("./partials/footer.html")
