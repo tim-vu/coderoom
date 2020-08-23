@@ -12,7 +12,6 @@ import {
   SEND_OFFER_DATA,
   SendAnswerData,
   SendOfferData,
-  SET_NICKNAME,
   STREAM_CONNECTED,
   StreamConnected,
   USER_JOINED,

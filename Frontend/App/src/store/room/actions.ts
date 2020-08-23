@@ -83,13 +83,6 @@ export function leftRoom(): LeftRoom {
   };
 }
 
-export function changeLanguage(language: Language) {
-  return {
-    type: CHANGE_LANGUAGE,
-    language,
-  };
-}
-
 export function languageChanged(language: Language) {
   return {
     type: LANGUAGE_CHANGED,

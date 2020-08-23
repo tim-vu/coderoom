@@ -1,5 +1,4 @@
 import { UserActions, UserState } from "./types";
-import { ById, toById } from "../byid";
 import { User } from "../../api/types";
 import produce from "immer";
 
@@ -15,10 +14,8 @@ export function userReducer(state = initialState, action: UserActions) {
       return produce(state, (draft) => {
         draft.users = action.room.users
           .filter((u) => u.connectionId !== action.connectionId)
-          .map((u) => <User>u);
-        draft.me = <User>(
-          action.room.users.find((u) => u.connectionId === action.connectionId)
-        );
+          .map((u) => u as User);
+        draft.me = action.room.users.find((u) => u.connectionId === action.connectionId) as User;
         draft.nickname = draft.me.nickName;
       });
     case "JOINED_GROUP_CALL":

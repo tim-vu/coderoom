@@ -9,7 +9,6 @@ import {
   streamConnected,
   userLeftGroupCall,
 } from "../store/users/actions";
-import { RECEIVED_ANSWER_DATA } from "../store/users/types";
 
 let PeerConnections: ById<Instance> = {};
 

@@ -1,9 +1,7 @@
-import React, { useEffect, useLayoutEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useLayoutEffect } from "react";
 import Editor from "../Editor/Editor";
 import SplitPane from "react-split-pane";
-import { RoomState } from "../../store/room/types";
-import { joinRoom, leaveRoom, updateText } from "../../store/room/actions";
+import { leaveRoom, updateText } from "../../store/room/actions";
 import { AppState } from "../../store";
 import { connect } from "react-redux";
 import Footer from "../Footer/Footer";
@@ -11,11 +9,6 @@ import EditorControls from "../EditorControls/EditorControls";
 import OutputControls from "../OutputControls/OutputControls";
 import Output from "../Output/Output";
 import GroupCall from "../GroupCall/GroupCall";
-
-interface RoomParams {
-  roomId: string | undefined;
-}
-
 const MIN_SPLIT_SIZE = 400;
 const MIN_CODEROOM_WIDTH = 800;
 

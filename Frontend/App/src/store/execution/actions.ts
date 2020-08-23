@@ -8,6 +8,8 @@ import {
   START_CODE_EXECUTION,
   StartCodeExecution,
 } from "./types";
+import {Language} from "../../api/types";
+import {CHANGE_LANGUAGE} from "../room/types";
 
 export function clearOutput(): ClearOutput {
   return {
@@ -34,5 +36,13 @@ export function codeExecutionCompleted(result: string): CodeExecutionCompleted {
   return {
     type: CODE_EXECUTION_COMPLETED,
     result,
+  };
+}
+
+export function changeLanguage(language: Language, reset: boolean) {
+  return {
+    type: CHANGE_LANGUAGE,
+    language,
+    reset
   };
 }

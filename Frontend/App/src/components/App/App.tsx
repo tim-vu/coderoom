@@ -1,8 +1,7 @@
 import React, { Fragment, useEffect } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import { connect } from "react-redux";
-import { RoomState, Status } from "../../store/room/types";
+import { Status } from "../../store/room/types";
 import { AppState } from "../../store";
 import { checkRoomExists, leaveRoom } from "../../store/room/actions";
 import Greeting from "../Greeting/Greeting";
@@ -37,6 +36,7 @@ const App: React.FC<AppProps> = ({
     return () => {
       leaveRoom();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

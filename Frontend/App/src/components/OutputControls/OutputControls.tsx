@@ -17,11 +17,6 @@ const OutputControls: React.FC<OutputControls> = ({ clearOutput }) => {
             <p className="text-white opacity-high">Run output</p>
           </button>
         </div>
-        <div className="h-full ml-4 flex justify-center items-center">
-          <button className="h-8">
-            <p className="text-white opacity-high">Question description</p>
-          </button>
-        </div>
       </div>
       <div>
         <button
