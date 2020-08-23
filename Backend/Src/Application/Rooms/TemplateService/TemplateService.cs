@@ -15,8 +15,7 @@ namespace Application.Rooms.TemplateService
         private static readonly IReadOnlyDictionary<Language, string> TemplatePaths = new Dictionary<Language, string>()
         {
             {Language.Java, "Solution.java"},
-            {Language.CSharp, "Solution.cs"},
-            {Language.Python3, "Solution.py"}
+            {Language.CSharp, "Solution.cs"}
         };
         
         private static readonly ConcurrentDictionary<Language, string> Templates = new ConcurrentDictionary<Language, string>();

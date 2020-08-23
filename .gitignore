@@ -4,12 +4,12 @@
 
 **/.idea/*
 
-### ASP.NET core
+### Backend
 
 **/obj/*
 **/bin/*
 **/*.DotSettings.user
-
+**/app/keys/*
 
 ### Frontend
 
