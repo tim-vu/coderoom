@@ -5,7 +5,7 @@
 @tailwind components;
 
 .menu {
-  @apply absolute inset-x-0 bg-white overflow-hidden h-0;
+  @apply absolute inset-x-0 overflow-hidden h-0;
   top: 110%;
   transition: height 1s ease;
 }
