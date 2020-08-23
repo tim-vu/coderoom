@@ -41,13 +41,13 @@ const Greeting: React.FC<GreetingProps> = ({ roomId, joinRoom }) => {
 
   return (
     <div className="h-full flex flex-col justify-center items-center opacity-high">
-      <h1 className="text-white text-5xl font-semibold mb-5">
+      <h1 className="text-white text-5xl font-semibold text-center mb-5">
         Welcome to CodeTwice
       </h1>
       <p className="text-white text-xl font-medium opacity-medium mb-3">
         Choose a nickname to get started
       </p>
-      <div className="flex flex-col items-center top-1/2 w-1/4 level-06dp p-4 rounded-md">
+      <div className="flex flex-col items-center top-1/2 w-64 level-06dp p-4 rounded-md">
         {state.error ? (
           <p className="text-red-500 mb-1">{state.error}</p>
         ) : null}

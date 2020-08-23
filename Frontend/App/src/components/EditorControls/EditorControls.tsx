@@ -3,10 +3,14 @@ import { getLanguageByKey, Language, Languages } from "../../api/types";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AppState } from "../../store";
-import { changeLanguage } from "../../store/room/actions";
 import { connect } from "react-redux";
-import { startCodeExecution } from "../../store/execution/actions";
+import {
+  changeLanguage,
+  startCodeExecution,
+} from "../../store/execution/actions";
 import { ExecutionState } from "../../store/execution/types";
+import Modal from "../Modal/Modal";
+import { Simulate } from "react-dom/test-utils";
 
 const renderLanguageOption = (language: Language) => {
   return (
@@ -31,10 +35,25 @@ const EditorControls: React.FC<EditorControlsProps> = ({
   startCodeExecution,
   changeLanguage,
 }) => {
+  const [state, setState] = React.useState({
+    language: Languages[0],
+    show: false,
+  });
+
   const handleOnLanguageChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    changeLanguage(getLanguageByKey(parseInt(event.target.value)) as Language);
+    setState({
+      show: true,
+      language: getLanguageByKey(parseInt(event.target.value)) as Language,
+    });
+  };
+
+  const handleDialogEvent = (yes: boolean) => {
+    return () => {
+      changeLanguage(state.language, yes);
+      setState({ ...state, show: false });
+    };
   };
 
   const handleOnRunClicked = () => {
@@ -43,6 +62,13 @@ const EditorControls: React.FC<EditorControlsProps> = ({
 
   return (
     <div className="level-04dp w-full h-12 flex justify-between items-center pb-1">
+      <Modal
+        show={state.show}
+        message="Do you want to reset the code to the default template?"
+        onYesClicked={handleDialogEvent(true)}
+        onNoClicked={handleDialogEvent(false)}
+        onCancelClicked={() => setState({ ...state, show: false })}
+      />
       <div className="ml-5 inline-block relative">
         <select
           className="level-06dp appearance-none h-8 py-1 px-2 w-32 text-white  rounded-md"

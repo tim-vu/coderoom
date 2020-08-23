@@ -115,7 +115,7 @@ export const signalRMiddleware: Middleware<Store<AppState, Action>> = (
       dispatch(textUpdated(action.text));
       break;
     case "CHANGE_LANGUAGE":
-      await connection.send("ChangeLanguage", action.language.key);
+      await connection.send("ChangeLanguage", action.language.key, action.reset);
       dispatch(languageChanged(action.language));
       break;
     case "START_CODE_EXECUTION":

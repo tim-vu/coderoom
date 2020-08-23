@@ -38,6 +38,7 @@ export interface ClearOutput {
 export interface ChangeLanguage {
   type: typeof CHANGE_LANGUAGE;
   language: Language;
+  reset: boolean;
 }
 
 export interface LanguageChanged {
