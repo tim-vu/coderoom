@@ -11,9 +11,10 @@ class Languages:
 
     JAVA = Language('Java', 0, 'Solution.class', 'java -cp . Solution')
     CSHARP = Language('C#', 1, 'Solution.dll', 'dotnet Solution.dll')
-    PYTHON3 = Language('Pytnon3', 2, 'Solution.py', 'python3 Solution.py')
+    PYTHON3 = Language('Python3', 2, 'Solution.py', 'python3 Solution.py')
+    JAVASCRIPT = Language('JavaScript', 3, 'Solution.js', 'node Solution.js')
 
-    ALL = [JAVA, CSHARP, PYTHON3]
+    ALL = [JAVA, CSHARP, PYTHON3, JAVASCRIPT]
 
     @staticmethod
     def get_language_by_key(key: str) -> Language:
