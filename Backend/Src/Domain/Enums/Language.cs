@@ -11,7 +11,10 @@ namespace Domain.Enums
         CSharp,
         
         [LanguageAttribute("py", "Python3")]
-        Python3
+        Python3,
+        
+        [LanguageAttribute("js", "JavaScript")]
+        JavaScript
     }
 
     public static class LanguageExtensions
