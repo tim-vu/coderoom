@@ -4,7 +4,7 @@ import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/mode-csharp";
 import "ace-builds/src-noconflict/mode-python";
-import "ace-builds/src-noconflict/theme-twilight";
+import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-dracula";
 import { Language } from "../../api/types";
 import { updateText } from "../../store/room/actions";
