@@ -233,6 +233,7 @@ class Sandbox:
         if self.time_limit_exceeded:
             raise TimeLimitExceededError("The program took too long to complete")
 
+
     def listen_for_docker_events(self):
 
         self.event_stream = self.client.events(decode=True, filters={
@@ -259,7 +260,3 @@ class RunResult:
 
     def __repr__(self) -> str:
         return f'Execution time: {self.execution_time}, output: {self.output}'
-
-            logger.debug(f'Command finished execution, output: {output}')
-            logger.debug(f'Output after processing: {output}')
-    
