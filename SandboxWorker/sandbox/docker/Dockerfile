@@ -12,8 +12,8 @@ RUN ./install_dotnet.sh && rm ./install_dotnet.sh
 COPY install_python3.sh .
 RUN ./install_python3.sh && rm ./install_python3.sh
 
-COPY install_node.sh .
-RUN ./install_node.sh && rm ./install_node.sh
+COPY install_deno.sh .
+RUN ./install_deno.sh && rm ./install_deno.sh
 
 
 

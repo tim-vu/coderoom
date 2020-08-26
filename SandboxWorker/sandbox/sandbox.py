@@ -188,6 +188,11 @@ class Sandbox:
             with open(self.output_file_path, 'r') as f:
                 output = f.read()
 
+            output = language.process_output(output)
+
+            logger.debug(f'Command finished execution, output: {output}')
+            logger.debug(f'Output after processing: {output}')
+    
             return RunResult(output, execution_time)
 
         except BaseException:

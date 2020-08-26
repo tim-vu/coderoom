@@ -1,5 +1,7 @@
 #!/bin/bash
 
+apt-get update
+
 # Install java runtime
 apt-get -y install --no-install-recommends openjdk-11-jre-headless
 
