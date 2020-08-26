@@ -190,9 +190,6 @@ class Sandbox:
 
             output = language.process_output(output)
 
-            logger.debug(f'Command finished execution, output: {output}')
-            logger.debug(f'Output after processing: {output}')
-    
             return RunResult(output, execution_time)
 
         except BaseException:
@@ -262,3 +259,7 @@ class RunResult:
 
     def __repr__(self) -> str:
         return f'Execution time: {self.execution_time}, output: {self.output}'
+
+            logger.debug(f'Command finished execution, output: {output}')
+            logger.debug(f'Output after processing: {output}')
+    
