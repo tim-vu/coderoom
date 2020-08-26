@@ -5,6 +5,8 @@ import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/mode-csharp";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/mode-javascript";
+import "ace-builds/src-noconflict/worker-javascript";
+import "ace-builds/src-noconflict/mode-typescript";
 import "ace-builds/src-noconflict/theme-dracula";
 import { Language } from "../../api/types";
 import { updateText } from "../../store/room/actions";

@@ -33,6 +33,7 @@ export const Languages: Language[] = [
   { key: 1, name: "C#", aceMode: "csharp" },
   { key: 2, name: "Python3", aceMode: "python" },
   { key: 3, name: "JavaScript", aceMode: "javascript" },
+  { key: 4, name: "TypeScript", aceMode: "typescript" },
 ];
 
 export function getLanguageByKey(languageKey: number): Language | undefined {
