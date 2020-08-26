@@ -14,7 +14,10 @@ namespace Domain.Enums
         Python3,
         
         [LanguageAttribute("js", "JavaScript")]
-        JavaScript
+        JavaScript,
+        
+        [LanguageAttribute("ts", "TypeScript")]
+        TypeScript
     }
 
     public static class LanguageExtensions

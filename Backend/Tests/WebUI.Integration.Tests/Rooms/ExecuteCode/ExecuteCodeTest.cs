@@ -42,6 +42,11 @@ namespace WebUI.Integration.Tests.Rooms.ExecuteCode
         private const string JavaScriptCode = @"
             console.log(""Hello World!"");
         ";
+
+        private const string TypeScriptCode = @"
+            const msg : string = ""Hello World!"";
+            console.log(msg);
+        ";
         
         public ExecuteCodeTest(AppFixture appFixture) : base(appFixture)
         {
@@ -52,6 +57,7 @@ namespace WebUI.Integration.Tests.Rooms.ExecuteCode
         [InlineData(CSharpCode, Language.CSharp)]
         [InlineData(Python3Code, Language.Python3)]
         [InlineData(JavaScriptCode, Language.JavaScript)]
+        [InlineData(TypeScriptCode, Language.TypeScript)]
         public async void ExecuteCode(string code, Language language)
         {
             var roomId = await AppFixture.CreateRoom();
