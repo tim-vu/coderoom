@@ -44,8 +44,6 @@ namespace WebUI
             });
 
             services.AddControllers();
-
-            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
             
             services.AddInfrastructure(Configuration);
             services.AddApplication();
@@ -76,11 +74,6 @@ namespace WebUI
             
             eventBus.RegisterEventHandlers();
 
-            if(env.IsDevelopment()){
-                app.UseStaticFiles();
-                app.UseSpaStaticFiles();
-            }
-
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
@@ -89,19 +82,6 @@ namespace WebUI
                 endpoints.MapHealthChecks("/healthcheck");
                 endpoints.MapControllers();
             });
-
-            
-            if(env.IsDevelopment()){
-                app.UseSpa(spa =>
-                {
-                    spa.Options.SourcePath = "../../../Frontend/App";
-
-                    if (env.IsDevelopment())
-                    {
-                        spa.UseReactDevelopmentServer("start");
-                    }
-                });
-            }
         }
     }
 }
