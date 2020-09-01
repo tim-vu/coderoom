@@ -21,7 +21,7 @@ namespace Infrastructure.RabbitMq
         private const string BrokerName = "coderoom_event_bus";
         
         private readonly ILogger<RabbitMqEventBus> _logger;
-        private readonly IRabbitMQPersistentConnection _persistentConnection;
+        private readonly IRabbitMqPersistentConnection _persistentConnection;
         private readonly ISubscriptionManager _subscriptionManager;
         private readonly IServiceProvider _serviceProvider;
         private readonly string _queueName;
@@ -29,7 +29,7 @@ namespace Infrastructure.RabbitMq
 
         private IModel _consumerChannel;
 
-        public RabbitMqEventBus(IRabbitMQPersistentConnection persistentConnection,
+        public RabbitMqEventBus(IRabbitMqPersistentConnection persistentConnection,
             ISubscriptionManager subscriptionManager, IServiceProvider serviceProvider,
             ILogger<RabbitMqEventBus> logger, string queueName = null, int retryCount = 5)
         {
@@ -165,7 +165,7 @@ namespace Infrastructure.RabbitMq
             
             channel.ExchangeDeclare(BrokerName, "direct");
 
-            channel.QueueDeclare(_queueName, false, false, false, null);
+            channel.QueueDeclare(_queueName, true, false, false, null);
 
             channel.CallbackException += (sender, args) =>
             {

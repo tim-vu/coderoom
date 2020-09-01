@@ -3,7 +3,7 @@ using RabbitMQ.Client;
 
 namespace Infrastructure.RabbitMq
 {
-    public interface IRabbitMQPersistentConnection : IDisposable
+    public interface IRabbitMqPersistentConnection : IDisposable
     {
         bool IsConnected { get; }
 
