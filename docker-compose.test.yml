@@ -1,0 +1,46 @@
+version: "2.4"
+
+services:
+  redis:
+    extends:
+      file: common-services.yml
+      service: redis
+    ports:
+      - "6379:6379"
+
+  rabbitmq:
+    extends:
+      file: common-services.yml
+      service: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  sandbox-worker:
+    extends:
+      file: common-services.yml
+      service: sandbox-worker
+    environment:
+      ENVIRONMENT: "test"
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
+
+  web-api:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile.test
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Test"
+      RedisConnection: "redis:6379"
+      EventBusConnection: "rabbitmq:5672"
+      EventBusUsername: ${RABBITMQ_USER}
+      EventBusPassword: ${RABBITMQ_PASS}
+    command: dotnet test
+
+volumes:
+  executables:
+    external:
+      name: "coderoom_executables"
