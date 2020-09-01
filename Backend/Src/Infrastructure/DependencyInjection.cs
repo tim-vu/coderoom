@@ -38,7 +38,7 @@ namespace Infrastructure
 
             services.AddSingleton<ISubscriptionManager, DefaultSubscriptionManager>();
             
-            services.AddSingleton<IRabbitMQPersistentConnection>(sp =>
+            services.AddSingleton<IRabbitMqPersistentConnection>(sp =>
             {
                 var logger = sp.GetRequiredService<ILogger<DefaultRabbitMQPersistentConnection>>();
                 
@@ -64,7 +64,7 @@ namespace Infrastructure
 
             services.AddSingleton<IEventBus>(sp =>
             {
-                var persistentConnection = sp.GetRequiredService<IRabbitMQPersistentConnection>();
+                var persistentConnection = sp.GetRequiredService<IRabbitMqPersistentConnection>();
                 var logger = sp.GetRequiredService<ILogger<RabbitMqEventBus>>();
                 var subsManager = sp.GetRequiredService<ISubscriptionManager>();
                 var queueName = configuration["EventBusQueueName"];
