@@ -55,10 +55,11 @@ class Sandbox:
     TIME_LIMIT_STEP = 0.1
     OUTPUT_FILE_NAME = 'output.txt'
 
-    def __init__(self, code_volume, time_limit=settings.TIME_LIMIT, memory_limit=settings.MEMORY_LIMIT):
+    def __init__(self, code_volume, runtime=settings.DOCKER_RUNTIME, time_limit=settings.TIME_LIMIT, memory_limit=settings.MEMORY_LIMIT):
         self.code_volume = code_volume
         self.client = docker.from_env()
         self.worker_id = str(uuid.uuid4())
+        self.runtime = runtime
         self.time_limit = time_limit + Sandbox.TIME_LIMIT_STEP
         self.memory_limit = memory_limit
 
@@ -95,6 +96,7 @@ class Sandbox:
             'id': self.container.id
         }))
 
+    @staticmethod
     def build_image(self) -> tuple:
 
         try:
@@ -107,7 +109,7 @@ class Sandbox:
 
         try:
             return self.client.containers.create(image=settings.DOCKER_IMAGE_FULL_NAME,
-                                                 runtime=settings.DOCKER_RUNTIME,
+                                                 runtime=self.runtime,
                                                  working_dir=work_dir,
                                                  command=run_command,
                                                  mounts=[code_mount],
