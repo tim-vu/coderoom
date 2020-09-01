@@ -1,0 +1,27 @@
+version: "2.4"
+
+services:
+  redis:
+    extends:
+      file: common-services.yml
+      service: redis
+  rabbitmq:
+    extends:
+      file: common-services.yml
+      service: rabbitmq
+  sandbox-worker:
+    extends:
+      file: common-services.yml
+      service: sandbox-worker
+    environment:
+      - ENVIRONMENT=test
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile.test
+    command: dotnet test
+
+volumes:
+  executables:
+    external:
+      name: "coderoom_executables"
