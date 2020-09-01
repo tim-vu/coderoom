@@ -6,7 +6,7 @@ namespace WebUI.Integration.Tests.Common
 {
     public class AppFixture
     {
-        private const string BaseUrl = "http://localhost:5050";
+        private const string BaseUrl = "http://web-api:5050";
 
         static AppFixture()
         {
