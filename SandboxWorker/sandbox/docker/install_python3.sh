@@ -1,5 +1,7 @@
 #!/bin/bash
 
+apt-get update
+
 # Install Python3 runtime
 apt-get -y install --no-install-recommends python3
 
