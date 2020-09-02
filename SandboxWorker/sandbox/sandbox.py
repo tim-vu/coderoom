@@ -96,7 +96,6 @@ class Sandbox:
             'id': self.container.id
         }))
 
-    @staticmethod
     def build_image(self) -> tuple:
 
         try:
