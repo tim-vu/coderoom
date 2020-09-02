@@ -42,5 +42,4 @@ services:
 
 volumes:
   executables:
-    external:
-      name: "coderoom_executables"
+    name: "coderoom_executables"
