@@ -5,7 +5,7 @@ agent:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
-  - name: Run backend tests
+  - name: Run tests
     run:
       when: "change_in('/Backend/')"
     task:
@@ -13,4 +13,4 @@ blocks:
         - name: Build and run tests
           commands:
             - checkout
-            - docker-compose -f docker-compose.backend.test.yml -p ci up --exit-code-from backend
+            - docker-compose -f docker-compose.test.yml -p ci up --exit-code-from web-api
