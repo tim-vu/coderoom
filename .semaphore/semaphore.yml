@@ -7,7 +7,7 @@ agent:
 blocks:
   - name: Run tests
     run:
-      when: "change_in('/Backend/')"
+      when: "change_in(['/Backend/', '/SandboxWorker/'])"
     task:
       env_vars:
         - name: RABBITMQ_USER
