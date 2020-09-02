@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Common.Exceptions;
@@ -49,6 +50,14 @@ namespace Application.Rooms.Commands.JoinRoom
                 if (room == default)
                 {
                     throw new NotFoundException($"Room {request.RoomId}");
+                }
+
+                var existingUser = room.Users.FirstOrDefault(u => u.ConnectionId == request.ConnectionId);
+
+                if (existingUser != null)
+                {
+                    _ = _roomNotifier.NotifyUserJoined(room, existingUser);
+                    return _mapper.Map<RoomVm>(room);
                 }
 
                 var newUser = new User {ConnectionId = request.ConnectionId, NickName = request.NickName};
