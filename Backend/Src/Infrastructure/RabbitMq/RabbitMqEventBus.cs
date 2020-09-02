@@ -165,7 +165,7 @@ namespace Infrastructure.RabbitMq
             
             channel.ExchangeDeclare(BrokerName, "direct");
 
-            channel.QueueDeclare(_queueName, false, false, false, null);
+            channel.QueueDeclare(_queueName, true, false, false, null);
 
             channel.CallbackException += (sender, args) =>
             {
