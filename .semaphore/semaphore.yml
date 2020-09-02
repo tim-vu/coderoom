@@ -9,6 +9,11 @@ blocks:
     run:
       when: "change_in('/Backend/')"
     task:
+      env_vars:
+        - name: RABBITMQ_USER
+          value: "user123"
+        - name: RABBITMQ_PASS
+          value: "pass123"
       jobs:
         - name: Build and run tests
           commands:
