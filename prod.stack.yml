@@ -71,6 +71,10 @@ services:
       - "80:80"
       - "443:443"
 
+    secrets:
+      - api_codetwice.crt
+      - api_codetwice.key
+
     deploy:
       mode: global
       update_config:
@@ -85,9 +89,6 @@ services:
         delay: 5s
         #max_attemps: 3
         window: 120s
-
-    volumes:
-      - "/data/certs:/etc/nginx/certs"
 
     command: sh -c './wait-for web-api:80 -- nginx'
 
@@ -127,3 +128,9 @@ services:
 volumes:
   executables:
     name: "coderoom_executables"
+
+secrets:
+  api_codetwice.crt:
+    external: true
+  api_codetwice.key:
+    external: true
