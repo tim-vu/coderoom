@@ -65,5 +65,28 @@ namespace Application.Test.Rooms.Commands
 
             act.Should().Throw<NotFoundException>();
         }
+
+        [Fact]
+        public async Task Handle_Rejoin()
+        {
+            var user = BogusData.User.Generate();
+
+            _room.Users.Add(user);
+            
+            _store.Setup(s => s.ObjectGet<Room>(_room.Id)).ReturnsAsync(_room);
+            
+            var joinRoomHandler = new JoinRoom.JoinRoomHandler(_store.Object, _roomService.Object, Mapper);
+
+            var result = await joinRoomHandler.Handle(new JoinRoom(_room.Id, user.ConnectionId, user.NickName),
+                CancellationToken.None);
+            
+            result.Should().NotBeNull();
+            result.Id.Should().Be(_room.Id);
+            
+            result.Users.Where(u => u.ConnectionId == user.ConnectionId && u.NickName == user.NickName).Should().ContainSingle();
+            
+            _store.Verify(s => s.ObjectSet(_room.Id, _room), Times.Never());
+            _roomService.Verify(s => s.NotifyUserJoined(_room, user));
+        }
     }
 }

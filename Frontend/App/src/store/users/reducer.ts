@@ -50,7 +50,9 @@ export function userReducer(state = initialState, action: UserActions) {
       return initialState;
     case "USER_JOINED":
       return produce(state, (draft) => {
-        draft.users.push(action.user);
+        const newUsers = draft.users.filter(u => u.connectionId === action.user.connectionId);
+        newUsers.push(action.user);
+        draft.users = newUsers;
       });
     case "USER_LEFT":
       return produce(state, (draft) => {

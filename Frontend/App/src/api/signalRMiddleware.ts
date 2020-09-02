@@ -8,7 +8,7 @@ import {
   textUpdated,
   typingUserChanged,
   roomError,
-  roomExists,
+  roomExists, joinRoom,
 } from "../store/room/actions";
 import { Middleware, MiddlewareAPI, Store } from "redux";
 import { getLanguageByKey, Language, RoomVm, User } from "./types";
@@ -173,18 +173,23 @@ const initializeSignalR: (store: MiddlewareAPI) => void = ({
   });
 
   connection.onclose((error) => {
+
+    dispatch(roomError("The connection to the server closed unexpectedly"));
+
     if (error) {
-      dispatch(roomError("The connection to the server closed unexpectedly"));
       console.log(error);
     }
   });
 
   connection.onreconnecting(() => {
-    console.log("Reconnection");
   });
 
   connection.onreconnected(() => {
-    console.log("Reconnected");
+
+    const roomId = getState().room.id as string;
+    const nickName = getState().user.nickname as string;
+    
+    dispatch(joinRoom(roomId, nickName))
   });
 
   return connection.start();
