@@ -10,7 +10,6 @@ import {
 } from "../../store/execution/actions";
 import { ExecutionState } from "../../store/execution/types";
 import Modal from "../Modal/Modal";
-import { Simulate } from "react-dom/test-utils";
 
 const renderLanguageOption = (language: Language) => {
   return (
