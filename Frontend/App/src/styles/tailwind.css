@@ -73,3 +73,20 @@ body {
 .Resizer.disabled {
   cursor: not-allowed;
 }
+
+.Toastify__toast-container {
+  @apply mt-12 !important;
+}
+
+.Toastify__toast {
+ @apply rounded-sm pl-2 !important;
+}
+
+.Toastify__toast--info {
+  @apply bg-green-500 !important;
+}
+
+.Toastify__toast--error {
+  @apply bg-red-600 !important
+}
+

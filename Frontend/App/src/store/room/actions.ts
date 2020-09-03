@@ -1,5 +1,4 @@
 import {
-  CHANGE_LANGUAGE,
   JOIN_ROOM,
   JoinRoom,
   LANGUAGE_CHANGED,
@@ -20,6 +19,7 @@ import {
 } from "./types";
 import { Language, RoomVm } from "../../api/types";
 import { JOINED_ROOM, JoinedRoom, LEFT_ROOM, LeftRoom } from "../common/types";
+import {LanguageChanged} from "../execution/types";
 
 export function checkRoomExists(roomId: string): CheckRoomExists {
   return {
@@ -83,7 +83,7 @@ export function leftRoom(): LeftRoom {
   };
 }
 
-export function languageChanged(language: Language) {
+export function languageChanged(language: Language) : LanguageChanged {
   return {
     type: LANGUAGE_CHANGED,
     language,

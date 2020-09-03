@@ -1,18 +1,13 @@
-import { Dispatch, Middleware, Store } from "redux";
-import { Action, AppState } from "../store";
-import Peer, { Instance } from "simple-peer";
-import { User } from "./types";
-import { ById } from "../store/byid";
-import {
-  sendAnswerData,
-  sendOfferData,
-  streamConnected,
-  userLeftGroupCall,
-} from "../store/users/actions";
+import {Middleware} from "redux";
+import {Action, AppDispatch, AppStore} from "../store";
+import Peer, {Instance} from "simple-peer";
+import {User} from "./types";
+import {ById} from "../store/byid";
+import {sendAnswerData, sendOfferData, streamConnected, userLeftGroupCall,} from "../store/users/actions";
 
 let PeerConnections: ById<Instance> = {};
 
-export const webRTCMiddleware: Middleware<Store<AppState, Action>> = (
+export const webRTCMiddleware: Middleware<AppStore> = (
   store
 ) => (next) => async (action: Action) => {
   const { dispatch, getState } = store;
@@ -73,7 +68,7 @@ export const webRTCMiddleware: Middleware<Store<AppState, Action>> = (
 const createPeerConnections: (
   user: User[],
   stream: MediaStream,
-  dispatch: Dispatch
+  dispatch: AppDispatch
 ) => ById<Instance> = (users, stream, dispatch) => {
   return users
     .filter((u) => u.inGroupCall)
@@ -108,7 +103,7 @@ const createPeerConnection = (
   connectionId: string,
   stream: MediaStream,
   data: string,
-  dispatch: Dispatch
+  dispatch: AppDispatch
 ) => {
   const peer = new Peer({
     initiator: false,
@@ -117,7 +112,6 @@ const createPeerConnection = (
   });
 
   peer.on("signal", async (data) => {
-    console.log("Sending answer data to: " + connectionId);
     dispatch(sendAnswerData(connectionId, JSON.stringify(data)));
   });
 
@@ -140,21 +134,6 @@ const WEBRTC_CONFIG = {
   iceServers: [
     {
       urls: ["stun:eu-turn7.xirsys.com"],
-    },
-    /*
-    {
-      username:
-        "p4TvAvkV6Oq5r4X2msIJr9tkJqeK7s-WoikZwtXNHjZRaLERVDxcM5Mv5x5taQ3jAAAAAF8XE6x0aW12dQ==",
-      credential: "d3400b12-cb6c-11ea-bafa-0242ac140004",
-      urls: [
-        "turn:eu-turn7.xirsys.com:80?transport=udp",
-        "turn:eu-turn7.xirsys.com:3478?transport=udp",
-        "turn:eu-turn7.xirsys.com:80?transport=tcp",
-        "turn:eu-turn7.xirsys.com:3478?transport=tcp",
-        "turns:eu-turn7.xirsys.com:443?transport=tcp",
-        "turns:eu-turn7.xirsys.com:5349?transport=tcp",
-      ],
-    },
-    */
+    }
   ],
 };

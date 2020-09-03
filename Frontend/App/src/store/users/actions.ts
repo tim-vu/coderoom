@@ -1,4 +1,4 @@
-import { User } from "../../api/types";
+import {User} from "../../api/types";
 import {
   JOIN_GROUP_CALL,
   JOINED_GROUP_CALL,
@@ -13,16 +13,14 @@ import {
   SendAnswerData,
   SendOfferData,
   STREAM_CONNECTED,
-  StreamConnected,
   USER_JOINED,
   USER_JOINED_GROUP_CALL,
   USER_LEFT,
   USER_LEFT_GROUP_CALL,
-  UserJoined,
   UserJoinedGroupCall,
-  UserLeft,
-  UserLeftGroupCall,
 } from "./types";
+import {AppThunk} from "../index";
+import {toast} from "react-toastify";
 
 export function joinGroupCall(stream: MediaStream): JoinGroupCall {
   return {
@@ -41,12 +39,20 @@ export function joinedGroupCall(stream: MediaStream): JoinedGroupCall {
 export function streamConnected(
   connectionId: string,
   stream: MediaStream
-): StreamConnected {
-  return {
-    type: STREAM_CONNECTED,
-    connectionId,
-    stream,
-  };
+): AppThunk {
+
+  return function(dispatch, getState){
+
+    const nickname = getState().user.users.filter(u => u.connectionId === connectionId).map(u => u.nickName)[0]
+
+    toast.info(`${nickname} has joined the call`);
+
+    dispatch({
+      type: STREAM_CONNECTED,
+      connectionId,
+      stream,
+    });
+  }
 }
 
 export function sendOfferData(
@@ -100,23 +106,44 @@ export function userJoinedGroupCall(connectionId: string): UserJoinedGroupCall {
   };
 }
 
-export function userLeftGroupCall(connectionId: string): UserLeftGroupCall {
-  return {
-    type: USER_LEFT_GROUP_CALL,
-    connectionId,
-  };
+export function userLeftGroupCall(connectionId: string): AppThunk {
+  return function(dispatch, getState){
+    const nickname = getState().user.users.filter(u => u.connectionId === connectionId).map(u => u.nickName)[0]
+
+    toast.info(`${nickname} has left the call`);
+
+    dispatch({
+      type: USER_LEFT_GROUP_CALL,
+      connectionId,
+    });
+  }
 }
 
-export function userJoined(user: User): UserJoined {
-  return {
-    type: USER_JOINED,
-    user,
-  };
+
+export function userJoined(user: User): AppThunk {
+  return function(dispatch)  {
+    dispatch({
+      type: USER_JOINED,
+      user,
+    });
+
+    toast.info(`${user.nickName} has joined the room`);
+  }
 }
 
-export function userLeft(connectionId: string): UserLeft {
-  return {
-    type: USER_LEFT,
-    connectionId,
-  };
+
+export function userLeft(connectionId: string): AppThunk<void> {
+
+  return function(dispatch, getState){
+
+    const nickname = getState().user.users.filter(u => u.connectionId === connectionId).map(u => u.nickName)[0];
+
+    toast.info(`${nickname} has left the room`);
+
+    dispatch({
+      type: USER_LEFT,
+      connectionId,
+    });
+
+  }
 }

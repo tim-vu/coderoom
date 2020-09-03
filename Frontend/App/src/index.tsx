@@ -6,10 +6,19 @@ import App from "./components/App/App";
 
 import "./styles/app.css";
 import "./styles/spinner.css";
+import "react-toastify/dist/ReactToastify.css";
 
+const rootElem = document.getElementById("root");
 ReactDOM.render(
   <Provider store={Store}>
     <App />
   </Provider>,
-  document.getElementById("root")
+  rootElem
 );
+
+if (module.hot) {
+  module.hot.accept("./components/App/App", () => {
+    const NextApp = require("./components/App/App").default;
+    ReactDOM.render(<NextApp />, rootElem);
+  });
+}

@@ -1,4 +1,4 @@
-import { Action, AppState } from "../store";
+import {Action, AppDispatch, AppState, AppStore} from "../store";
 import * as signalR from "@microsoft/signalr";
 import { HttpTransportType, HubConnectionState } from "@microsoft/signalr";
 import {
@@ -10,7 +10,7 @@ import {
   roomError,
   roomExists, joinRoom,
 } from "../store/room/actions";
-import { Middleware, MiddlewareAPI, Store } from "redux";
+import { Middleware} from "redux";
 import { getLanguageByKey, Language, RoomVm, User } from "./types";
 import {
   joinedGroupCall,
@@ -25,9 +25,9 @@ import {
   codeExecutionStarted,
 } from "../store/execution/actions";
 import { BASE_URL } from "./codeRoomAPI";
+import {toast} from "react-toastify";
 
 const connection = new signalR.HubConnectionBuilder()
-  .configureLogging(signalR.LogLevel.Debug)
   .withAutomaticReconnect()
   .withUrl(BASE_URL + "/hubs/room", {
     transport: HttpTransportType.WebSockets,
@@ -46,10 +46,10 @@ const INTERESTING_ACTION_TYPES = [
   "START_CODE_EXECUTION",
 ];
 
-export const signalRMiddleware: Middleware<Store<AppState, Action>> = (
+export const signalRMiddleware: Middleware<AppStore> = (
   store
 ) => (next) => async (action: Action) => {
-  const { dispatch } = store;
+  const { dispatch, getState } = store;
 
   if (!INTERESTING_ACTION_TYPES.includes(action.type)) {
     return next(action);
@@ -57,7 +57,7 @@ export const signalRMiddleware: Middleware<Store<AppState, Action>> = (
 
   if (action.type === "CHECK_ROOM_EXISTS") {
     try {
-      await initializeSignalR(store);
+      await initializeSignalR(dispatch, getState);
     } catch (e) {
       dispatch(roomError("Unable to establish a connection with the server"));
       console.log(e);
@@ -125,11 +125,9 @@ export const signalRMiddleware: Middleware<Store<AppState, Action>> = (
   }
 };
 
-const initializeSignalR: (store: MiddlewareAPI) => void = ({
-  getState,
-  dispatch,
-}) => {
+const initializeSignalR = (dispatch: AppDispatch, getState : () => AppState) => {
   connection.on("OnUserJoined", (user: User) => {
+
     dispatch(userJoined(user));
   });
 
@@ -182,9 +180,16 @@ const initializeSignalR: (store: MiddlewareAPI) => void = ({
   });
 
   connection.onreconnecting(() => {
+    toast.error("The connection to the server has been lost, trying to reconnect", {
+      autoClose: false,
+      toastId: 'CONNECTION_LOST'
+    })
   });
 
   connection.onreconnected(() => {
+
+    toast.dismiss('CONNECTION_LOST');
+    toast.info('The connection to the server has been restored, rejoining the room');
 
     const roomId = getState().room.id as string;
     const nickName = getState().user.nickname as string;
