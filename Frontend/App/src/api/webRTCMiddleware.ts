@@ -117,7 +117,6 @@ const createPeerConnection = (
   });
 
   peer.on("signal", async (data) => {
-    console.log("Sending answer data to: " + connectionId);
     dispatch(sendAnswerData(connectionId, JSON.stringify(data)));
   });
 

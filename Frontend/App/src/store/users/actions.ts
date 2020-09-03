@@ -1,4 +1,4 @@
-import { User } from "../../api/types";
+import {User} from "../../api/types";
 import {
   JOIN_GROUP_CALL,
   JOINED_GROUP_CALL,
@@ -18,11 +18,11 @@ import {
   USER_JOINED_GROUP_CALL,
   USER_LEFT,
   USER_LEFT_GROUP_CALL,
-  UserJoined,
   UserJoinedGroupCall,
-  UserLeft,
   UserLeftGroupCall,
 } from "./types";
+import {AppThunk} from "../index";
+import {toast} from "react-toastify";
 
 export function joinGroupCall(stream: MediaStream): JoinGroupCall {
   return {
@@ -107,16 +107,31 @@ export function userLeftGroupCall(connectionId: string): UserLeftGroupCall {
   };
 }
 
-export function userJoined(user: User): UserJoined {
-  return {
-    type: USER_JOINED,
-    user,
-  };
+
+export function userJoined(user: User): AppThunk<void> {
+  return function(dispatch)  {
+    dispatch({
+      type: USER_JOINED,
+      user,
+    });
+
+    toast.info(`${user.nickName} has joined the room`);
+  }
 }
 
-export function userLeft(connectionId: string): UserLeft {
-  return {
-    type: USER_LEFT,
-    connectionId,
-  };
+
+export function userLeft(connectionId: string): AppThunk<void> {
+
+  return function(dispatch, getState){
+
+    const nickname = getState().user.users.filter(u => u.connectionId === connectionId).map(u => u.nickName)[0];
+
+    toast.info(`${nickname} has left the room`);
+
+    dispatch({
+      type: USER_LEFT,
+      connectionId,
+    });
+
+  }
 }

@@ -9,6 +9,7 @@ import EditorControls from "../EditorControls/EditorControls";
 import OutputControls from "../OutputControls/OutputControls";
 import Output from "../Output/Output";
 import GroupCall from "../GroupCall/GroupCall";
+import { ToastContainer } from "react-toastify";
 const MIN_SPLIT_SIZE = 400;
 const MIN_CODEROOM_WIDTH = 800;
 
@@ -32,6 +33,7 @@ const CodeRoom: React.FC = () => {
       className="bg-background absolute inset-0 w-full coderoom"
       style={{ minWidth: MIN_CODEROOM_WIDTH }}
     >
+      <ToastContainer autoClose={4000} />
       <div className="absolute inset-x-0 top-0 bottom-16">
         <SplitPane
           split="vertical"

@@ -27,6 +27,7 @@
     "reactstrap": "^8.5.1",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0",
     "rimraf": "^2.6.2",
     "simple-peer": "^9.7.2"
   },
@@ -35,6 +36,7 @@
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.5",
     "@types/simple-peer": "^9.6.0",
+    "@types/webpack-env": "^1.15.2",
     "ajv": "^6.12.4",
     "autoprefixer": "^9.8.6",
     "cross-env": "^5.2.0",
@@ -54,7 +56,7 @@
     "extends": "react-app"
   },
   "scripts": {
-    "start": "npm run watch:css & rimraf ./build && react-scripts start",
+    "start": "npm run watch:css & rimraf ./build && BROWSER=none react-scripts start",
     "build": "npm run build:css && react-scripts build",
     "test": "cross-env CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
