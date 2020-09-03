@@ -33,7 +33,7 @@ const CodeRoom: React.FC = () => {
       className="bg-background absolute inset-0 w-full coderoom"
       style={{ minWidth: MIN_CODEROOM_WIDTH }}
     >
-      <ToastContainer autoClose={4000} />
+      <ToastContainer autoClose={3000} />
       <div className="absolute inset-x-0 top-0 bottom-16">
         <SplitPane
           split="vertical"
