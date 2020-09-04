@@ -8,6 +8,7 @@ import { AppState } from "../../store";
 import { connect } from "react-redux";
 import { UserState } from "../../store/users/types";
 import { joinGroupCall } from "../../store/users/actions";
+import { toast } from "react-toastify";
 
 interface FooterProps {
   user: UserState;
@@ -29,8 +30,14 @@ const Footer: React.FC<FooterProps> = ({ user, joinGroupCall }) => {
       .getUserMedia({ video: true, audio: true })
       .then(joinGroupCall)
       .catch((err) => {
-        //TODO: alert the user
+        console.log(err);
       });
+  };
+
+  const handleInviteClicked = () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      toast.info("The link has been copied to your clipboard");
+    });
   };
 
   const joinCallDisabled = user.me?.inGroupCall;
@@ -38,16 +45,19 @@ const Footer: React.FC<FooterProps> = ({ user, joinGroupCall }) => {
   return (
     <div className="level-04dp h-16 w-full flex justify-between items-center">
       <div className="ml-8 flex items-center">
-        <button className="level-06dp w-24 py-1 px-2 rounded-md flex justify-around items-center">
-          <p className="text-white opacity-high">Invite</p>
+        <button
+          className="level-06dp w-24 py-1 px-2 rounded-md flex justify-around items-center text-white opacity-high"
+          onClick={handleInviteClicked}
+        >
+          Invite
           <FontAwesomeIcon icon={faUserPlus} className="text-white" />
         </button>
         <button
-          className="ml-3 level-06dp w-28 py-1 px-2 rounded-md flex justify-around items-center"
+          className="ml-3 level-06dp w-28 py-1 px-2 rounded-md flex justify-around items-center text-white opacity-high"
           disabled={joinCallDisabled}
           onClick={handleJoinCallClicked}
         >
-          <p className="text-white opacity-high">Join Call</p>
+          Join Call
           <FontAwesomeIcon icon={faVideo} className="text-white" />
         </button>
         <div className="ml-3 flex">
@@ -55,8 +65,8 @@ const Footer: React.FC<FooterProps> = ({ user, joinGroupCall }) => {
         </div>
       </div>
       <div className="mr-6">
-        <button className="bg-red-600 py-1 px-2 rounded-md">
-          <p className="text-white opacity-high">Close room</p>
+        <button className="bg-red-600 py-1 px-2 rounded-md text-white opacity-high">
+          Close room
         </button>
       </div>
     </div>
