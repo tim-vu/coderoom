@@ -1,7 +1,9 @@
 using System.Threading.Tasks;
 using Application.CodeExecution;
 using Application.Common.Interfaces;
+using Application.Common.Interfaces.MemoryStore;
 using Application.Common.Protos;
+using Application.Rooms.RoomNotifier;
 using Application.Rooms.RoomService;
 using Application.Test.Common;
 using Domain.Entities;

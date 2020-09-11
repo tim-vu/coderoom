@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.CodeExecution.ExecutionJobService;
 using Application.Common.Exceptions;
 using Application.Common.Interfaces;
+using Application.Rooms.ExecutionJobService;
+using Application.Rooms.RoomNotifier;
 using Application.Rooms.RoomService;
 using Domain.Entities;
 using Domain.Enums;
 using MediatR;
 
-namespace Application.CodeExecution.Commands.CreateExecutionJob
+namespace Application.Rooms.Commands.CreateExecutionJob
 {
     public class CreateExecutionJob : IRequest
     {

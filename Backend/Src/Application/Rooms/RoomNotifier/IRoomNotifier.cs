@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Domain.Entities;
 
-namespace Application.Rooms.RoomService
+namespace Application.Rooms.RoomNotifier
 {
     public interface IRoomNotifier
     {

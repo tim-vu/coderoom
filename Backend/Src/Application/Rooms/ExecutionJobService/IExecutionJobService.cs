@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Domain.Entities;
 using Domain.Enums;
 
-namespace Application.CodeExecution.ExecutionJobService
+namespace Application.Rooms.ExecutionJobService
 {
     public interface IExecutionJobService
     {
