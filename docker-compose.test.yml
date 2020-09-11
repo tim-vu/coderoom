@@ -27,6 +27,7 @@ services:
       ENVIRONMENT: "test"
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
+      JOB_TIMEOUT: 25000
 
   web-api:
     build:
@@ -34,10 +35,11 @@ services:
       dockerfile: Dockerfile.test
     environment:
       ASPNETCORE_ENVIRONMENT: "Test"
-      RedisConnection: "redis:6379"
-      EventBusConnection: "rabbitmq:5672"
-      EventBusUsername: ${RABBITMQ_USER}
-      EventBusPassword: ${RABBITMQ_PASS}
+      JobTimeout: 25000
+      Redis:Connection: "redis:6379"
+      EventBus:Connection: "rabbitmq:5672"
+      EventBus:Username: ${RABBITMQ_USER}
+      EventBus:Password: ${RABBITMQ_PASS}
     command: dotnet test
 
 volumes:
