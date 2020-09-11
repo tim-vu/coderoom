@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Common.Interfaces;
+using Application.Common.Interfaces.MemoryStore;
+using Application.Rooms.RoomNotifier;
 using Application.Rooms.RoomService;
 using Application.Test.Common;
 using Domain.Entities;
