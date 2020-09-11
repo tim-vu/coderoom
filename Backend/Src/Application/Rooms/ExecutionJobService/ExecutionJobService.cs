@@ -10,7 +10,7 @@ using Domain.Enums;
 using Google.Protobuf;
 using ExecutionJob = Application.Common.Protos.ExecutionJob;
 
-namespace Application.CodeExecution.ExecutionJobService
+namespace Application.Rooms.ExecutionJobService
 {
     public class ExecutionJobService : IExecutionJobService
     {

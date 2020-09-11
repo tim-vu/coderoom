@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Application.Common.Interfaces;
 using Application.Common.Interfaces.EventBus;
 using Application.Common.Protos;
+using Application.Rooms.RoomNotifier;
 using Application.Rooms.RoomService;
 using Domain.Entities;
 

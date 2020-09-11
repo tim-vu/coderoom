@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Common.Exceptions;
 using Application.Common.Interfaces;
+using Application.Rooms.RoomNotifier;
 using Application.Rooms.RoomService;
 using Domain.Entities;
 using MediatR;

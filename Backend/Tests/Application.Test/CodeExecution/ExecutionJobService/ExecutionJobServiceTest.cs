@@ -35,7 +35,7 @@ namespace Application.Test.CodeExecution.ExecutionJobService
 
             _compiler.Setup(c => c.Compile(language, sourceFiles)).ReturnsAsync(compilationResult);
             
-            var executionJobService = new Application.CodeExecution.ExecutionJobService.ExecutionJobService(_compiler.Object, _eventBus.Object, _executionJobCompletedHandler.Object, taskRunner.Object);
+            var executionJobService = new Application.Rooms.ExecutionJobService.ExecutionJobService(_compiler.Object, _eventBus.Object, _executionJobCompletedHandler.Object, taskRunner.Object);
 
             await executionJobService.StartJob(roomId, jobId, language, sourceFiles);
             
@@ -63,7 +63,7 @@ namespace Application.Test.CodeExecution.ExecutionJobService
 
             _compiler.Setup(c => c.Compile(language, sourceFiles)).ReturnsAsync(compilationResult);
 
-            var executionJobService = new Application.CodeExecution.ExecutionJobService.ExecutionJobService(_compiler.Object, _eventBus.Object, _executionJobCompletedHandler.Object, taskRunner.Object);
+            var executionJobService = new Application.Rooms.ExecutionJobService.ExecutionJobService(_compiler.Object, _eventBus.Object, _executionJobCompletedHandler.Object, taskRunner.Object);
 
             await executionJobService.StartJob(roomId, jobId, language, sourceFiles);
             
@@ -85,7 +85,7 @@ namespace Application.Test.CodeExecution.ExecutionJobService
             var taskRunner = new Mock<ITaskRunner>();
             taskRunner.Setup(t => t.Delay(It.IsAny<TimeSpan>())).Returns(Task.CompletedTask);
             
-            var executionJobService = new Application.CodeExecution.ExecutionJobService.ExecutionJobService(_compiler.Object, _eventBus.Object, _executionJobCompletedHandler.Object, taskRunner.Object);
+            var executionJobService = new Application.Rooms.ExecutionJobService.ExecutionJobService(_compiler.Object, _eventBus.Object, _executionJobCompletedHandler.Object, taskRunner.Object);
 
             await executionJobService.TimeoutJob(roomId, jobId);
             
