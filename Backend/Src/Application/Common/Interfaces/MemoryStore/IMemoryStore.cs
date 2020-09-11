@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Application.Common.Interfaces.MemoryStore;
 
 namespace Application.Common.Interfaces
 {

@@ -1,4 +1,5 @@
 using Application.Common.Interfaces;
+using Application.Common.Interfaces.MemoryStore;
 using RedLockNet;
 
 namespace Infrastructure.Redis

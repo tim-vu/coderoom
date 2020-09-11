@@ -2,6 +2,7 @@ using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Application.Common.Interfaces;
+using Application.Common.Interfaces.MemoryStore;
 using RedLockNet;
 using StackExchange.Redis;
 
