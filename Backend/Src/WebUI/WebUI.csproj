@@ -22,4 +22,20 @@
       <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="app\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="app\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="app\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="app\**" />
+    </ItemGroup>
+
 </Project>

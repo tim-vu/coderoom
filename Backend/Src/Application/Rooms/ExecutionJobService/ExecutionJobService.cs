@@ -14,15 +14,16 @@ namespace Application.Rooms.ExecutionJobService
 {
     public class ExecutionJobService : IExecutionJobService
     {
-        private static readonly TimeSpan JobTimeout = TimeSpan.FromSeconds(8);
+        private readonly TimeSpan _jobTimeout;
         
         private readonly IMultiLanguageCompiler _compiler;
         private readonly IEventBus _eventBus;
         private readonly IEventHandler<ExecutionJobResult> _executionJobCompletedHandler;
         private readonly ITaskRunner _taskRunner;
         
-        public ExecutionJobService(IMultiLanguageCompiler compiler, IEventBus eventBus, IEventHandler<ExecutionJobResult> executionJobCompletedHandler, ITaskRunner taskRunner)
+        public ExecutionJobService(TimeSpan jobTimeout, IMultiLanguageCompiler compiler, IEventBus eventBus, IEventHandler<ExecutionJobResult> executionJobCompletedHandler, ITaskRunner taskRunner)
         {
+            _jobTimeout = jobTimeout;
             _compiler = compiler;
             _eventBus = eventBus;
             _executionJobCompletedHandler = executionJobCompletedHandler;
@@ -72,7 +73,7 @@ namespace Application.Rooms.ExecutionJobService
 
         public Task TimeoutJob(string roomId, string id)
         {
-            return _taskRunner.Delay(JobTimeout).ContinueWith(_ =>
+            return _taskRunner.Delay(_jobTimeout).ContinueWith(_ =>
             {
                 var jobResult = new ExecutionJobResult
                 {

@@ -23,7 +23,9 @@ channel = connection.channel()
 
 logger.info(f'RabbitMQ client acquired a connection to \'{settings.RABBITMQ_HOST}\'')
 
-channel.exchange_declare(exchange=settings.BROKER_NAME)
+channel.exchange_declare(exchange=settings.BROKER_NAME, arguments= {
+    'x-message-ttl': settings.JOB_TIMEOUT - settings.JOB_DURATION
+})
 
 channel.queue_declare(queue=RABBITMQ_TASK)
 channel.queue_bind(exchange=settings.BROKER_NAME, queue=RABBITMQ_TASK, routing_key=settings.RABBITMQ_TASK)
