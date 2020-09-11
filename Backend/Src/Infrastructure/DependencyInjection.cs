@@ -27,7 +27,7 @@ namespace Infrastructure
         {
             services.AddTransient<IMemoryStore, RedisMemoryStore>();
             services.AddSingleton<IConnectionMultiplexer>(o =>
-                ConnectionMultiplexer.Connect(configuration.GetValue<string>("RedisConnection")));
+                ConnectionMultiplexer.Connect(configuration["Redis:Connection"]));
             services.AddSingleton<IDistributedLockFactory, RedLockFactory>(o => RedLockFactory.Create(new List<RedLockMultiplexer> {new RedLockMultiplexer(o.GetService<IConnectionMultiplexer>())}));
             
             services.AddSingleton<IIdGenerator, IdGenerator.IdGenerator>();
@@ -45,18 +45,18 @@ namespace Infrastructure
                 var factory = new ConnectionFactory
                 {
                     DispatchConsumersAsync = true,
-                    HostName = configuration["EventBusConnection"],
-                    Endpoint = new AmqpTcpEndpoint(new Uri("amqp://" + configuration["EventBusConnection"]))
+                    HostName = configuration["EventBus:Connection"],
+                    Endpoint = new AmqpTcpEndpoint(new Uri("amqp://" + configuration["EventBus:Connection"]))
                 };
 
-                if (!string.IsNullOrEmpty(configuration["EventBusUsername"]))
+                if (!string.IsNullOrEmpty(configuration["EventBus:Username"]))
                 {
-                    factory.UserName = configuration["EventBusUsername"];
+                    factory.UserName = configuration["EventBus:Username"];
                 }
 
-                if (!string.IsNullOrEmpty(configuration["EventBusPassword"]))
+                if (!string.IsNullOrEmpty(configuration["EventBus:Password"]))
                 {
-                    factory.Password = configuration["EventBusPassword"];
+                    factory.Password = configuration["EventBus:Password"];
                 }
                 
                 return new DefaultRabbitMQPersistentConnection(factory, logger);
@@ -67,7 +67,7 @@ namespace Infrastructure
                 var persistentConnection = sp.GetRequiredService<IRabbitMQPersistentConnection>();
                 var logger = sp.GetRequiredService<ILogger<RabbitMqEventBus>>();
                 var subsManager = sp.GetRequiredService<ISubscriptionManager>();
-                var queueName = configuration["EventBusQueueName"];
+                var queueName = configuration["EventBus:QueueName"];
                 
                 return new RabbitMqEventBus(persistentConnection, subsManager, sp, logger, queueName);
             });
