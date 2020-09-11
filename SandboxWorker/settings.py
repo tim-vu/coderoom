@@ -12,7 +12,10 @@ RABBITMQ_TASK_COMPLETED = "ExecutionJobResult"
 RABBITMQ_USERNAME = os.environ.get('RABBITMQ_USERNAME')
 RABBITMQ_PASSWORD = os.environ.get('RABBITMQ_PASSWORD')
 
-EXECUTABLES_VOLUME = os.environ.get('EXECUTABLES_VOLUME')
-RUNTIME = 'dockerd' if os.environ.get('ENVIRONMENT') == 'test' else 'runmc'
-
 BROKER_NAME = "coderoom_event_bus"
+
+RUNTIME = 'dockerd' if os.environ.get('ENVIRONMENT') == 'test' else 'runmc'
+EXECUTABLES_VOLUME = os.environ.get('EXECUTABLES_VOLUME')
+
+JOB_TIMEOUT = int(os.environ.get('JOB_TIMEOUT'))
+JOB_DURATION = 1000

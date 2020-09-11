@@ -46,7 +46,7 @@ namespace WebUI
             services.AddControllers();
             
             services.AddInfrastructure(Configuration);
-            services.AddApplication();
+            services.AddApplication(Configuration);
 
             services.AddSignalR();
 
