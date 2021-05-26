@@ -18,6 +18,7 @@ services:
       RABBITMQ_USERNAME: ${RABBITMQ_USER}
       RABBITMQ_PASSWORD: ${RABBITMQ_PASS}
       EXECUTABLES_VOLUME: "coderoom_executables"
+      JOB_TIMEOUT: 6000
     command: sh -c './wait-for rabbitmq:5672 -- python worker.py'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
